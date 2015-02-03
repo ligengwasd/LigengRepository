@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+    <!-- ========================================================= -->
+    <!-- ======================== Defaults ======================= -->
+    <!-- ========================================================= -->
+    <title>devtoolsComponent</title>
+    <description></description>
+    <copyright></copyright>
+    <version></version>
+    
+	<entity entity-name="AdModule" package-name="org.ofbiz.devtools.entity" >
+		<field name="adModuleId" type="id-ne"></field>
+		<field name="moduleName" type="name"></field>
+		<field name="title" type="name"></field>
+		<field name="lineNo" type="numeric"></field>
+		<field name="description" type="id-vlong"></field>
+		<field name="packageName" type="name"></field>
+		<field name="copyright" type="name"></field>
+		<field name="author" type="name"></field>
+		<field name="version" type="name"></field>
+		<field name="defaultResourceName" type="name"></field>
+		<field name="vendor" type="name"></field>
+		<field name="created" type="name"></field>
+		<field name="javaFilepath" type="name"></field>
+		<field name="entityFilename" type="name"></field>
+		<field name="entityFilepath" type="name"></field>
+		<field name="serviceFilename" type="name"></field>
+		<field name="serviceFilepath" type="name"></field>
+		<field name="widgetPath" type="name"></field>
+		<field name="formsFilename" type="name"></field>
+		<field name="gridsFilename" type="name"></field>
+		<field name="screensFilename" type="name"></field>
+		<field name="menusFilename" type="name"></field>
+		<field name="configFilepath" type="name"></field>
+		<field name="configFilename" type="name"></field>
+		<field name="controllerFilename" type="name"></field>
+		<field name="controllerFilepath" type="name"></field>
+		<field name="owner" type="name"></field>
+		<field name="errorpage" type="name"></field>
+		<field name="filename" type="name"></field>
+		<prim-key field="adModuleId"/>
+		<relation fk-name="ENTITY_MODULE" title="ENTITY_MODULE" rel-entity-name="AdEntity" type="many">
+			<key-map field-name="adModuleId" rel-field-name="adModuleId" />
+		</relation>
+		<relation fk-name="SERVICE_MODULE" title="SERVICE_MODULE" rel-entity-name="AdService" type="many">
+			<key-map field-name="adModuleId" rel-field-name="adModuleId" />
+		</relation>
+		<relation fk-name="REQUESTMAP_MODULE" title="REQUESTMAP_MODULE" rel-entity-name="AdRequestmap" type="many">
+			<key-map field-name="adModuleId" rel-field-name="adModuleId" />
+		</relation>
+		<relation fk-name="VIEWMAP_MODULE" title="VIEWMAP_MODULE" rel-entity-name="AdViewmap" type="many">
+			<key-map field-name="adModuleId" rel-field-name="adModuleId" />
+		</relation>
+		<relation fk-name="RESPONSE_MODULE" title="RESPONSE_MODULE" rel-entity-name="AdResponse" type="many">
+			<key-map field-name="adModuleId" rel-field-name="adModuleId" />
+		</relation>
+	</entity>
+	<entity entity-name="AdEntity" package-name="org.ofbiz.devtools.entity">
+		<field name="adEntityId" type="id-ne"></field>
+		<field name="adModuleId" type="id-ne"></field>
+		<field name="entityName" type="name"></field>
+		<field name="tableName" type="name"></field>
+		<field name="packageName" type="name"></field>
+		<field name="description" type="id-vlong"></field>
+		<field name="defaultResourceName" type="name"></field>
+		<field name="dependentOn" type="name"></field>
+		<field name="sequenceBankSize" type="name"></field>
+		<field name="enableLock" type="indicator"></field>
+		<field name="noAutoStamp" type="indicator"></field>
+		<field name="neverCache" type="indicator"></field>
+		<field name="neverCheck" type="indicator"></field>
+		<field name="autoClearCache" type="indicator"></field>
+		<field name="title" type="name"></field>
+		<field name="copyright" type="name"></field>
+		<field name="author" type="name"></field>
+		<field name="version" type="name"></field>
+		<field name="lineNo" type="numeric"></field>
+		<prim-key field="adEntityId"/>
+		<relation fk-name="ENTITY_MODULE" title="ENTITY_MODULE" rel-entity-name="AdModule" type="one">
+			<key-map field-name="adModuleId" rel-field-name="adModuleId" />
+		</relation>
+		<relation fk-name="VIEWMAP_ENTITY" title="VIEWMAP_ENTITY" rel-entity-name="AdViewmap" type="many">
+			<key-map field-name="adEntityId" rel-field-name="adEntityId" />
+		</relation>
+		<relation fk-name="SERVICE_ENTITY" title="SERVICE_ENTITY" rel-entity-name="AdService" type="many">
+			<key-map field-name="adEntityId" rel-field-name="defaultEntity" />
+		</relation>
+		<relation fk-name="REQUESTMAP_ENTITY" title="REQUESTMAP_ENTITY" rel-entity-name="AdRequestmap" type="many">
+			<key-map field-name="adEntityId" rel-field-name="adEntityId" />
+		</relation>
+		<relation fk-name="RELATION_ENTITY" title="RELATION_ENTITY" rel-entity-name="AdRelation" type="many">
+			<key-map field-name="adEntityId" rel-field-name="adEntityId" />
+		</relation>
+		<relation fk-name="RELATION_RELENTITY" title="RELATION_RELENTITY" rel-entity-name="AdRelation" type="many">
+			<key-map field-name="adEntityId" rel-field-name="relEntityId" />
+		</relation>
+		<relation fk-name="PRIMKEY_ENTITY" title="PRIMKEY_ENTITY" rel-entity-name="AdPrimkey" type="many">
+			<key-map field-name="adEntityId" rel-field-name="adEntityId" />
+		</relation>
+		<relation fk-name="KEYMAP_ENTITY" title="KEYMAP_ENTITY" rel-entity-name="AdKeymap" type="many">
+			<key-map field-name="adEntityId" rel-field-name="adEntityId" />
+		</relation>
+		<relation fk-name="GRID_ENTITY" title="GRID_ENTITY" rel-entity-name="AdGrid" type="many">
+			<key-map field-name="adEntityId" rel-field-name="adEntityId" />
+		</relation>
+		<relation fk-name="FORM_ENTITY" title="FORM_ENTITY" rel-entity-name="AdForm" type="many">
+			<key-map field-name="adEntityId" rel-field-name="adEntityId" />
+		</relation>
+		<relation fk-name="FIELD_ENTITY" title="FIELD_ENTITY" rel-entity-name="AdField" type="many">
+			<key-map field-name="adEntityId" rel-field-name="adEntityId" />
+		</relation>
+		<relation fk-name="ATTRIBUTE_ENTITY" title="ATTRIBUTE_ENTITY" rel-entity-name="AdAttribute" type="many">
+			<key-map field-name="adEntityId" rel-field-name="adEntityId" />
+		</relation>
+	</entity>
+	<entity entity-name="AdField" package-name="org.ofbiz.devtools.entity">
+		<field name="adFieldId" type="id-ne"></field>
+		<field name="adEntityId" type="id-ne"></field>
+		<field name="fieldName" type="name"></field>
+		<field name="colName" type="name"></field>
+		<field name="lineNo" type="numeric"></field>
+		<field name="type" type="name"></field>
+		<field name="javaType" type="name"></field>
+		<field name="dataLength" type="numeric"></field>
+		<field name="dataScale" type="numeric"></field>
+		<field name="description" type="id-vlong"></field>
+		<field name="encrypt" type="indicator"></field>
+		<field name="enableAuditLog" type="indicator"></field>
+		<field name="notNull" type="indicator"></field>
+		<field name="fieldSet" type="name"></field>
+		<field name="ispk" type="indicator"></field>
+		<field name="isidentifier" type="indicator"></field>
+		<field name="isselectioncolumn" type="indicator"></field>
+		<field name="referencevalue" type="name"></field>
+		<prim-key field="adFieldId"/>
+		<relation fk-name="FIELD_ENTITY" title="FIELD_ENTITY" rel-entity-name="AdEntity" type="one">
+			<key-map field-name="adEntityId" rel-field-name="adEntityId" />
+		</relation>
+		<relation fk-name="PRIMKEY_FIELD" title="PRIMKEY_FIELD" rel-entity-name="AdPrimkey" type="many">
+			<key-map field-name="adFieldId" rel-field-name="adFieldId" />
+		</relation>
+		<relation fk-name="KEYMAP_FIELD" title="KEYMAP_FIELD" rel-entity-name="AdKeymap" type="many">
+			<key-map field-name="adFieldId" rel-field-name="adFieldId" />
+		</relation>
+		<relation fk-name="KEYMAP_REFFIELD" title="KEYMAP_REFFIELD" rel-entity-name="AdKeymap" type="many">
+			<key-map field-name="adFieldId" rel-field-name="relFieldId" />
+		</relation>
+		<relation fk-name="GRIDFIELD_FIELD" title="GRIDFIELD_FIELD" rel-entity-name="AdGridfield" type="many">
+			<key-map field-name="adFieldId" rel-field-name="adFieldId" />
+		</relation>
+		<relation fk-name="FORMFIELD_FIELD" title="FORMFIELD_FIELD" rel-entity-name="AdFormfield" type="many">
+			<key-map field-name="adFieldId" rel-field-name="adFieldId" />
+		</relation>
+		<relation fk-name="ATTRIBUTE_FIELD" title="ATTRIBUTE_FIELD" rel-entity-name="AdAttribute" type="many">
+			<key-map field-name="adFieldId" rel-field-name="adFieldId" />
+		</relation>
+	</entity>
+	<entity entity-name="AdRelation" package-name="org.ofbiz.devtools.entity">
+		<field name="adRelationId" type="id-ne"></field>
+		<field name="adEntityId" type="id-ne"></field>
+		<field name="relEntityId" type="id-ne"></field>
+		<field name="description" type="id-vlong"></field>
+		<field name="lineNo" type="numeric"></field>
+		<field name="type" type="id-ne"></field>
+		<field name="title" type="id-ne"></field>
+		<field name="fkName" type="id-long"></field>
+		<prim-key field="adRelationId"/>
+		<relation fk-name="RELATION_RELENTITY" title="RELATION_RELENTITY" rel-entity-name="AdEntity" type="one">
+			<key-map field-name="relEntityId" rel-field-name="adEntityId" />
+		</relation>
+		<relation fk-name="RELATION_ENTITY" title="RELATION_ENTITY" rel-entity-name="AdEntity" type="one">
+			<key-map field-name="adEntityId" rel-field-name="adEntityId" />
+		</relation>
+		<relation fk-name="KEYMAP_RELATION" title="KEYMAP_RELATION" rel-entity-name="AdKeymap" type="many">
+			<key-map field-name="adRelationId" rel-field-name="adRelationId" />
+		</relation>
+	</entity>
+	<entity entity-name="AdKeymap" package-name="org.ofbiz.devtools.entity">
+		<field name="adKeymapId" type="id-ne"></field>
+		<field name="adRelationId" type="id-ne"></field>
+		<field name="adFieldId" type="id-ne"></field>
+		<field name="relFieldId" type="id-ne"></field>
+		<field name="adEntityId" type="id-ne"></field>
+		<field name="lineNo" type="numeric"></field>
+		<prim-key field="adKeymapId"/>
+		<relation fk-name="KEYMAP_ENTITY" title="KEYMAP_ENTITY" rel-entity-name="AdEntity" type="one">
+			<key-map field-name="adEntityId" rel-field-name="adEntityId" />
+		</relation>
+		<relation fk-name="KEYMAP_REFFIELD" title="KEYMAP_REFFIELD" rel-entity-name="AdField" type="one">
+			<key-map field-name="relFieldId" rel-field-name="adFieldId" />
+		</relation>
+		<relation fk-name="KEYMAP_RELATION" title="KEYMAP_RELATION" rel-entity-name="AdRelation" type="one">
+			<key-map field-name="adRelationId" rel-field-name="adRelationId" />
+		</relation>
+		<relation fk-name="KEYMAP_FIELD" title="KEYMAP_FIELD" rel-entity-name="AdField" type="one">
+			<key-map field-name="adFieldId" rel-field-name="adFieldId" />
+		</relation>
+	</entity>
+	<entity entity-name="AdPrimkey" package-name="org.ofbiz.devtools.entity">
+		<field name="adPrimkeyId" type="id-ne"></field>
+		<field name="adFieldId" type="id-ne"></field>
+		<field name="adEntityId" type="id-ne"></field>
+		<field name="lineNo" type="numeric"></field>
+		<field name="primkeyName" type="id-ne"></field>
+		<prim-key field="adPrimkeyId"/>
+		<relation fk-name="PRIMKEY_FIELD" title="PRIMKEY_FIELD" rel-entity-name="AdField" type="one">
+			<key-map field-name="adFieldId" rel-field-name="adFieldId" />
+		</relation>
+		<relation fk-name="PRIMKEY_ENTITY" title="PRIMKEY_ENTITY" rel-entity-name="AdEntity" type="one">
+			<key-map field-name="adEntityId" rel-field-name="adEntityId" />
+		</relation>
+	</entity>
+	<entity entity-name="AdService" package-name="org.ofbiz.devtools.entity">
+		<field name="adServiceId" type="id-ne"></field>
+		<field name="adModuleId" type="id-ne"></field>
+		<field name="defaultEntity" type="id-ne"></field>
+		<field name="defaultEntityName" type="name"></field>
+		<field name="description" type="id-vlong"></field>
+		<field name="namespace" type="name"></field>
+		<field name="permissionService" type="id-ne"></field>
+		<field name="serviceName" type="name"></field>
+		<field name="engine" type="name"></field>
+		<field name="location" type="name"></field>
+		<field name="invoke" type="name"></field>
+		<field name="auth" type="indicator"></field>
+		<field name="export" type="indicator"></field>
+		<field name="validated" type="indicator"></field>
+		<field name="useTransaction" type="indicator"></field>
+		<field name="requireNewTransaction" type="indicator"></field>
+		<field name="transactionTimeout" type="numeric"></field>
+		<field name="maxRetry" type="numeric"></field>
+		<field name="debug" type="indicator"></field>
+		<field name="semaphore" type="id-ne"></field>
+		<field name="semaphoreWaitSeconds" type="numeric"></field>
+		<field name="semaphoreSleep" type="numeric"></field>
+		<prim-key field="adServiceId"/>
+		<relation fk-name="SERVICE_ENTITY" title="SERVICE_ENTITY" rel-entity-name="AdEntity" type="one">
+			<key-map field-name="defaultEntity" rel-field-name="adEntityId" />
+		</relation>
+		<relation fk-name="SERVICE_MODULE" title="SERVICE_MODULE" rel-entity-name="AdModule" type="one">
+			<key-map field-name="adModuleId" rel-field-name="adModuleId" />
+		</relation>
+		<relation fk-name="ATTRIBUTE_SERVICE" title="ATTRIBUTE_SERVICE" rel-entity-name="AdAttribute" type="many">
+			<key-map field-name="adServiceId" rel-field-name="adServiceId" />
+		</relation>
+	</entity>
+	<entity entity-name="AdRequestmap" package-name="org.ofbiz.devtools.entity">
+		<field name="adRequestmapId" type="id-ne"></field>
+		<field name="adEntityId" type="id-ne"></field>
+		<field name="adSecurityId" type="id-ne"></field>
+		<field name="adModuleId" type="id-ne"></field>
+		<field name="description" type="id-ne"></field>
+		<field name="requestName" type="name"></field>
+		<field name="uri" type="name"></field>
+		<field name="edit" type="indicator"></field>
+		<field name="trackVisit" type="indicator"></field>
+		<field name="trackServerhit" type="indicator"></field>
+		<field name="https" type="id-ne"></field>
+		<field name="auth" type="id-ne"></field>
+		<field name="eventName" type="name"></field>
+		<field name="eventType" type="name"></field>
+		<field name="eventPath" type="name"></field>
+		<field name="eventInvoke" type="name"></field>
+		<prim-key field="adRequestmapId"/>
+		<relation fk-name="REQUESTMAP_MODULE" title="REQUESTMAP_MODULE" rel-entity-name="AdModule" type="one">
+			<key-map field-name="adModuleId" rel-field-name="adModuleId" />
+		</relation>
+		<relation fk-name="REQUESTMAP_ENTITY" title="REQUESTMAP_ENTITY" rel-entity-name="AdEntity" type="one">
+			<key-map field-name="adEntityId" rel-field-name="adEntityId" />
+		</relation>
+		<relation fk-name="RESPONSE_REQUESTMAP" title="RESPONSE_REQUESTMAP" rel-entity-name="AdResponse" type="many">
+			<key-map field-name="adRequestmapId" rel-field-name="adRequestmapId" />
+		</relation>
+	</entity>
+	<entity entity-name="AdViewmap" package-name="org.ofbiz.devtools.entity">
+		<field name="adViewmapId" type="id-ne"></field>
+		<field name="adEntityId" type="id-ne"></field>
+		<field name="adModuleId" type="id-ne"></field>
+		<field name="description" type="id-vlong"></field>
+		<field name="viewName" type="name"></field>
+		<field name="pageuri" type="name"></field>
+		<field name="type" type="name"></field>
+		<field name="info" type="name"></field>
+		<field name="contentType" type="name"></field>
+		<field name="encoding" type="name"></field>
+		<field name="noCache" type="indicator"></field>
+		<prim-key field="adViewmapId"/>
+		<relation fk-name="VIEWMAP_MODULE" title="VIEWMAP_MODULE" rel-entity-name="AdModule" type="one">
+			<key-map field-name="adModuleId" rel-field-name="adModuleId" />
+		</relation>
+		<relation fk-name="VIEWMAP_ENTITY" title="VIEWMAP_ENTITY" rel-entity-name="AdEntity" type="one">
+			<key-map field-name="adEntityId" rel-field-name="adEntityId" />
+		</relation>
+		<relation fk-name="RESPONSE_VIEWMAP" title="RESPONSE_VIEWMAP" rel-entity-name="AdResponse" type="many">
+			<key-map field-name="adViewmapId" rel-field-name="adViewmapId" />
+		</relation>
+		<relation fk-name="GRID_VIEWMAP" title="GRID_VIEWMAP" rel-entity-name="AdGrid" type="many">
+			<key-map field-name="adViewmapId" rel-field-name="adViewmapId" />
+		</relation>
+		<relation fk-name="FORM_VIEWMAP" title="FORM_VIEWMAP" rel-entity-name="AdForm" type="many">
+			<key-map field-name="adViewmapId" rel-field-name="adViewmapId" />
+		</relation>
+	</entity>
+	<entity entity-name="AdResponse" package-name="org.ofbiz.devtools.entity">
+		<field name="adResponseId" type="id-ne"></field>
+		<field name="adRequestmapId" type="id-ne"></field>
+		<field name="adViewmapId" type="id-ne"></field>
+		<field name="adModuleId" type="id-ne"></field>
+		<field name="responseName" type="name"></field>
+		<field name="type" type="name"></field>
+		<field name="value" type="name"></field>
+		<field name="saveLastView" type="indicator"></field>
+		<field name="saveCurrentView" type="indicator"></field>
+		<field name="saveHomeView" type="indicator"></field>
+		<prim-key field="adResponseId"/>
+		<relation fk-name="RESPONSE_MODULE" title="RESPONSE_MODULE" rel-entity-name="AdModule" type="one">
+			<key-map field-name="adModuleId" rel-field-name="adModuleId" />
+		</relation>
+		<relation fk-name="RESPONSE_VIEWMAP" title="RESPONSE_VIEWMAP" rel-entity-name="AdViewmap" type="one">
+			<key-map field-name="adViewmapId" rel-field-name="adViewmapId" />
+		</relation>
+		<relation fk-name="RESPONSE_REQUESTMAP" title="RESPONSE_REQUESTMAP" rel-entity-name="AdRequestmap" type="one">
+			<key-map field-name="adRequestmapId" rel-field-name="adRequestmapId" />
+		</relation>
+	</entity>
+	<entity entity-name="AdAttribute" package-name="org.ofbiz.devtools.entity">
+		<field name="adAttributeId" type="id-ne"></field>
+		<field name="adServiceId" type="id-ne"></field>
+		<field name="adFieldId" type="id-ne"></field>
+		<field name="adEntityId" type="id-ne"></field>
+		<field name="description" type="id-vlong"></field>
+		<field name="attributeName" type="name"></field>
+		<field name="type" type="name"></field>
+		<field name="modeIn" type="name"></field>
+		<field name="optional" type="indicator"></field>
+		<field name="defaultValue" type="id-ne"></field>
+		<field name="formLabel" type="id-ne"></field>
+		<field name="stringMapPrefix" type="id-ne"></field>
+		<field name="stringListSuffix" type="id-ne"></field>
+		<field name="formDisplay" type="indicator"></field>
+		<field name="allowHtml" type="id-ne"></field>
+		<prim-key field="adAttributeId"/>
+		<relation fk-name="ATTRIBUTE_FIELD" title="ATTRIBUTE_FIELD" rel-entity-name="AdField" type="one">
+			<key-map field-name="adFieldId" rel-field-name="adFieldId" />
+		</relation>
+		<relation fk-name="ATTRIBUTE_ENTITY" title="ATTRIBUTE_ENTITY" rel-entity-name="AdEntity" type="one">
+			<key-map field-name="adEntityId" rel-field-name="adEntityId" />
+		</relation>
+		<relation fk-name="ATTRIBUTE_SERVICE" title="ATTRIBUTE_SERVICE" rel-entity-name="AdService" type="one">
+			<key-map field-name="adServiceId" rel-field-name="adServiceId" />
+		</relation>
+	</entity>
+	<entity entity-name="AdForm" package-name="org.ofbiz.devtools.entity">
+		<field name="adFormId" type="id-ne"></field>
+		<field name="adViewmapId" type="id-ne"></field>
+		<field name="adEntityId" type="id-ne"></field>
+		<field name="adModuleId" type="id-ne"></field>
+		<field name="formName" type="name"></field>
+		<field name="type" type="id-ne"></field>
+		<field name="defaultMapName" type="name"></field>
+		<field name="headerRowStyle" type="name"></field>
+		<field name="defaultTableStyle" type="name"></field>
+		<prim-key field="adFormId"/>
+		<relation fk-name="FORM_MODULE" title="FORM_MODULE" rel-entity-name="AdModule" type="one">
+			<key-map field-name="adModuleId" rel-field-name="adModuleId" />
+		</relation>
+		<relation fk-name="FORM_VIEWMAP" title="FORM_VIEWMAP" rel-entity-name="AdViewmap" type="one">
+			<key-map field-name="adViewmapId" rel-field-name="adViewmapId" />
+		</relation>
+		<relation fk-name="FORM_ENTITY" title="FORM_ENTITY" rel-entity-name="AdEntity" type="one">
+			<key-map field-name="adEntityId" rel-field-name="adEntityId" />
+		</relation>
+		<relation fk-name="FORMFIELD_FORM" title="FORMFIELD_FORM" rel-entity-name="AdFormfield" type="many">
+			<key-map field-name="adFormId" rel-field-name="adFormId" />
+		</relation>
+	</entity>
+	<entity entity-name="AdFormfield" package-name="org.ofbiz.devtools.entity">
+		<field name="adFormfieldId" type="id-ne"></field>
+		<field name="adFormId" type="id-ne"></field>
+		<field name="adFieldId" type="id-ne"></field>
+		<field name="position" type="id-vlong"></field>
+		<field name="isactive" type="indicator"></field>
+		<field name="formfieldName" type="id-ne"></field>
+		<field name="title" type="name"></field>
+		<field name="inputtype" type="name"></field>
+		<field name="format" type="name"></field>
+		<field name="defaultValue" type="name"></field>
+		<field name="disabled" type="indicator"></field>
+		<field name="size" type="id-ne"></field>
+		<field name="maxlength" type="id-ne"></field>
+		<field name="ddltype" type="id-ne"></field>
+		<field name="entity" type="name"></field>
+		<field name="namefield" type="name"></field>
+		<field name="valuefield" type="name"></field>
+		<field name="referencevalue" type="id-ne"></field>
+		<prim-key field="adFormfieldId"/>
+		<relation fk-name="FORMFIELD_FORM" title="FORMFIELD_FORM" rel-entity-name="AdForm" type="one">
+			<key-map field-name="adFormId" rel-field-name="adFormId" />
+		</relation>
+		<relation fk-name="FORMFIELD_FIELD" title="FORMFIELD_FIELD" rel-entity-name="AdField" type="one">
+			<key-map field-name="adFieldId" rel-field-name="adFieldId" />
+		</relation>
+	</entity>
+	<entity entity-name="AdFormcommand" package-name="org.ofbiz.devtools.entity">
+		<field name="adFormcommandId" type="id-ne"></field>
+		<field name="adFormId" type="id-ne"></field>
+		<field name="commandName" type="name"></field>
+		<field name="commandValue" type="name"></field>
+		<field name="commandType" type="name"></field>
+		<field name="style" type="name"></field>
+		<field name="ajaxUrl" type="name"></field>
+		<field name="onclick" type="name"></field>
+		<field name="updategridname" type="name"></field>
+		<field name="useWhen" type="name"></field>
+		<prim-key field="adFormcommandId"/>
+		<relation fk-name="FORMCOMMAND_FORM" title="FORMCOMMAND_FORM" rel-entity-name="AdForm" type="one">
+			<key-map field-name="adFormId" rel-field-name="adFormId" />
+		</relation>
+	</entity>
+	<entity entity-name="AdGrid" package-name="org.ofbiz.devtools.entity">
+		<field name="adGridId" type="id-ne"></field>
+		<field name="adViewmapId" type="id-ne"></field>
+		<field name="adEntityId" type="id-ne"></field>
+		<field name="modelId" type="name"></field>
+		<field name="adModuleId" type="id-ne"></field>
+		<field name="gridName" type="name"></field>
+		<field name="lineNo" type="numeric"></field>
+		<field name="resizable" type="id-ne"></field>
+		<field name="editableIn" type="id-ne"></field>
+		<field name="selectable" type="id-ne"></field>
+		<field name="height" type="id-ne"></field>
+		<field name="pagesize" type="id-ne"></field>
+		<field name="updateCommand" type="name"></field>
+		<field name="createCommand" type="name"></field>
+		<field name="deleteCommand" type="name"></field>
+		<prim-key field="adGridId"/>
+		<relation fk-name="GRID_VIEWMAP" title="GRID_VIEWMAP" rel-entity-name="AdViewmap" type="one">
+			<key-map field-name="adViewmapId" rel-field-name="adViewmapId" />
+		</relation>
+		<relation fk-name="GRID_MODULE" title="GRID_MODULE" rel-entity-name="AdModule" type="one">
+			<key-map field-name="adModuleId" rel-field-name="adModuleId" />
+		</relation>
+		<relation fk-name="GRID_ENTITY" title="GRID_ENTITY" rel-entity-name="AdEntity" type="one">
+			<key-map field-name="adEntityId" rel-field-name="adEntityId" />
+		</relation>
+		<relation fk-name="GRIDFIELD_GRID" title="GRIDFIELD_GRID" rel-entity-name="AdGridfield" type="many">
+			<key-map field-name="adGridId" rel-field-name="adGridId" />
+		</relation>
+		<relation fk-name="GRIDCOMMAND_GRID" title="GRIDCOMMAND_GRID" rel-entity-name="AdGridcommand" type="many">
+			<key-map field-name="adGridId" rel-field-name="adGridId" />
+		</relation>
+	</entity>
+	<entity entity-name="AdGridfield" package-name="org.ofbiz.devtools.entity">
+		<field name="adGridfieldId" type="id-ne"></field>
+		<field name="adGridId" type="id-ne"></field>
+		<field name="adFieldId" type="id-ne"></field>
+		<field name="gridfieldName" type="id-ne"></field>
+		<field name="lineNo" type="numeric"></field>
+		<field name="description" type="id-vlong"></field>
+		<field name="gridfieldType" type="id-ne"></field>
+		<field name="width" type="id-ne"></field>
+		<field name="format" type="name"></field>
+		<field name="editableIn" type="id-ne"></field>
+		<field name="ddltype" type="id-ne"></field>
+		<field name="entity" type="name"></field>
+		<field name="namefield" type="name"></field>
+		<field name="valuefield" type="name"></field>
+		<field name="referencevalue" type="name"></field>
+		<prim-key field="adGridfieldId"/>
+		<relation fk-name="GRIDFIELD_GRID" title="GRIDFIELD_GRID" rel-entity-name="AdGrid" type="one">
+			<key-map field-name="adGridId" rel-field-name="adGridId" />
+		</relation>
+		<relation fk-name="GRIDFIELD_FIELD" title="GRIDFIELD_FIELD" rel-entity-name="AdField" type="one">
+			<key-map field-name="adFieldId" rel-field-name="adFieldId" />
+		</relation>
+	</entity>
+	<entity entity-name="AdGridcommand" package-name="org.ofbiz.devtools.entity">
+		<field name="adGridcommandId" type="id-ne"></field>
+		<field name="adGridId" type="id-ne"></field>
+		<field name="commandName" type="name"></field>
+		<field name="commandText" type="name"></field>
+		<field name="commandTitle" type="name"></field>
+		<field name="commandType" type="name"></field>
+		<field name="lineNo" type="numeric"></field>
+		<field name="width" type="id-ne"></field>
+		<field name="url" type="name"></field>
+		<field name="modelId" type="name"></field>
+		<prim-key field="adGridcommandId"/>
+		<relation fk-name="GRIDCOMMAND_GRID" title="GRIDCOMMAND_GRID" rel-entity-name="AdGrid" type="one">
+			<key-map field-name="adGridId" rel-field-name="adGridId" />
+		</relation>
+	</entity>
+	<entity entity-name="AdSequence" package-name="org.ofbiz.devtools.entity">
+		<field name="adSequenceId" type="id-ne"></field>
+		<field name="seqEntityName" type="id-ne"></field>
+		<field name="refRecordId" type="id-ne"></field>
+		<field name="description" type="long-varchar"></field>
+		<field name="startno" type="numeric"></field>
+		<field name="currentnext" type="numeric"></field>
+		<prim-key field="adSequenceId"/>
+	</entity>
+</entitymodel>

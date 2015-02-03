@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+    <SecurityPermission description="View operations in the DevTools Component." permissionId="DEVTOOLS_VIEW"/>
+    <SecurityPermission description="Create operations in the DevTools Component." permissionId="DEVTOOLS_CREATE"/>
+    <SecurityPermission description="Update operations in the DevTools Component." permissionId="DEVTOOLS_UPDATE"/>
+    <SecurityPermission description="Delete operations in the DevTools Component." permissionId="DEVTOOLS_DELETE"/>
+    <SecurityPermission description="ALL operations in the DevTools Component." permissionId="DEVTOOLS_ADMIN"/>
+    <SecurityGroupPermission groupId="FULLADMIN" permissionId="DEVTOOLS_ADMIN"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="DEVTOOLS_CREATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="DEVTOOLS_DELETE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="DEVTOOLS_UPDATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="DEVTOOLS_VIEW"/>
+    <SecurityGroupPermission groupId="VIEWADMIN" permissionId="DEVTOOLS_VIEW"/>
+    <SecurityGroupPermission groupId="BIZADMIN" permissionId="DEVTOOLS_ADMIN"/>
+</entity-engine-xml>

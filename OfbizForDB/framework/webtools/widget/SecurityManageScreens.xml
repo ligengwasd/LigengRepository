@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../framework/base/dtd/widget-screen.xsd">
+        
+	<screen name="findUserLoginSecurityGroup">
+		<section>
+			<actions>
+				<set field="headerItem" value="securityManage"/>
+				<set field="pCtx" from-field="parameters"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+	   				<decorator-section name="body">
+	   					<section>
+	   						<widgets>
+	   							<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+		                    		<decorator-section name="search-options">
+		                    			<container style="button-bar">
+		                            		<link target="findUserLogin" text="用户管理" style="buttontext create"></link>
+		                            		<link target="findSecurityGroup" text="权限组管理" style="buttontext create"></link>
+		                            		<link target="findSecurityPermission" text="权限管理" style="buttontext create"></link>
+		                        		</container>
+		                    			<include-form location="component://webtools/widget/SecurityManageForms.xml" name="findUserLoginSecurityGroup"/>
+		                   			</decorator-section>
+		                    		<decorator-section name="search-results">
+		                    			<include-grid location="component://webtools/widget/SecurityManageGrids.xml" name="gridUserLoginSecurityGroup"/>
+		                    			<platform-specific>
+		                    				<html><html-template location="component://webtools/webapp/webtools/findSecurityGroup.ftl"/></html>
+		                    			</platform-specific>
+		                    		</decorator-section>
+		                    	</decorator-screen>
+	   						</widgets>
+	   					</section>
+	   				</decorator-section>
+	    		</decorator-screen>		
+	    		
+			</widgets>
+		</section>
+	</screen>
+	<screen name="findUserLogin">
+		<section>
+			<actions>
+				<set field="headerItem" value="securityManage"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+	   				<decorator-section name="body">
+	   					<section>
+	   						<widgets>
+	   							<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+		                    		<decorator-section name="search-options">
+		                    			<include-form location="component://webtools/widget/SecurityManageForms.xml" name="findUserLogin"/>
+		                   			</decorator-section>
+		                    		<decorator-section name="search-results">
+		                    			<include-grid location="component://webtools/widget/SecurityManageGrids.xml" name="gridUserLogin"/>
+		                    		</decorator-section>
+		                    	</decorator-screen>
+	   						</widgets>
+	   					</section>
+	   				</decorator-section>
+	    		</decorator-screen>		
+			</widgets>
+		</section>
+	</screen>
+	<screen name="findSecurityGroup">
+		<section>
+			<actions>
+				<set field="headerItem" value="securityManage"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+	   				<decorator-section name="body">
+	   					<section>
+	   						<widgets>
+	   							<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+		                    		<decorator-section name="search-options">
+		                    			<include-form location="component://webtools/widget/SecurityManageForms.xml" name="findSecurityGroup"/>
+		                    			<platform-specific>
+		                    				<html><html-template location="component://webtools/webapp/webtools/findSecurityGroup.ftl"/></html>
+		                    			</platform-specific>
+		                   			</decorator-section>
+		                    		<decorator-section name="search-results">
+		                    			<include-grid location="component://webtools/widget/SecurityManageGrids.xml" name="gridSecurityGroup"/>
+		                    			<include-grid location="component://webtools/widget/SecurityManageGrids.xml" name="gridSecurityGroupPermission"/>
+		                    		</decorator-section>
+		                    	</decorator-screen>
+	   						</widgets>
+	   					</section>
+	   				</decorator-section>
+	    		</decorator-screen>		
+	    		
+			</widgets>
+		</section>
+	</screen>
+	<screen name="findSecurityPermission">
+		<section>
+			<actions>
+				<set field="headerItem" value="securityManage"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+	   				<decorator-section name="body">
+	   					<section>
+	   						<widgets>
+	   							<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+		                    		<decorator-section name="search-options">
+		                    			<include-form location="component://webtools/widget/SecurityManageForms.xml" name="findSecurityPermission"/> 
+		                   			</decorator-section>
+		                    		<decorator-section name="search-results">
+		                    			<include-grid location="component://webtools/widget/SecurityManageGrids.xml" name="gridSecurityPermission"/>
+		                    		</decorator-section>
+		                    	</decorator-screen>
+	   						</widgets>
+	   					</section>
+	   				</decorator-section>
+	    		</decorator-screen>		
+			</widgets>
+		</section>
+	</screen>
+
+</screens>

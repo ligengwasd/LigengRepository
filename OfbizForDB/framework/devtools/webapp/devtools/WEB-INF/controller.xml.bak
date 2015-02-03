@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+    <!-- The controller elements that are common to all OFBiz components
+         can be found in the following xml file. A component can override the
+         elements found in the common-controller.xml file. -->
+    <include location="component://common/webcommon/WEB-INF/common-controller.xml"/>
+    <description>DevTools Component Site Configuration File</description>
+    
+    <request-map uri="generateEntityInfo">
+		<security https="true" auth="true"/>
+		<event type="service"   invoke="generateEntityInfo"/>
+		<response name="success" type="view" value="editAdEntity"/>
+	</request-map>
+    
+	<request-map uri="main">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="main"/>
+	</request-map>
+	<!-- AdModule start -->
+	<request-map uri="findAdModule">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="findAdModule"></response>
+	</request-map>
+	<request-map uri="editAdModule">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="editAdModule"></response>
+	</request-map>
+	<request-map uri="createAdModule">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createAdModule" />
+		<response name="success" type="view" value="editAdModule"></response>
+	</request-map>
+	<request-map uri="updateAdModule">
+		<security https="false" auth="true"/>
+		<event type="service" invoke="updateAdModule" />
+		<response name="success" type="view" value="editAdModule"></response>
+	</request-map>
+	<request-map uri="deleteAdModule">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteAdModule" />
+		<response name="success" type="none"></response>
+	</request-map>
+	<!-- AdModule end -->
+	
+	<!-- AdEntity start -->
+	<request-map uri="findAdEntity">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="findAdEntity"></response>
+	</request-map>
+	<request-map uri="editAdEntity">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="editAdEntity"></response>
+	</request-map>
+	<request-map uri="createAdEntity">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createAdEntity"/>
+		<response name="success" type="view" value="editAdEntity"></response>
+	</request-map>
+	<request-map uri="updateAdEntity">
+		<security https="false" auth="true"/>
+		<event type="service" invoke="updateAdEntity"/>
+		<response name="success" type="view" value="editAdEntity"></response>
+	</request-map>
+	<request-map uri="deleteAdEntity">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteAdEntity"/>
+		<response name="success" type="none"></response>
+	</request-map>
+	<!-- AdEntity end -->
+	
+	<!-- AdField start -->
+	<request-map uri="findAdField">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="findAdField"></response>
+	</request-map>
+	<!-- <request-map uri="editAdField">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="editAdField"></response>
+	</request-map> -->
+	<request-map uri="createAdField">
+		<security https="false" auth="true"/>
+		<event type="service" invoke="createAdField"/>
+		<response name="success" type="none"></response>
+	</request-map>
+	<request-map uri="updateAdField">
+		<security https="false" auth="true"/>
+		<event type="service" invoke="updateAdField"/>
+		<response name="success" type="none"></response>
+	</request-map>
+	<request-map uri="deleteAdField">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteAdField"/>
+		<response name="success" type="none"></response>
+	</request-map>
+	<!-- AdField end -->
+	
+	<!-- AdPrimkey start -->
+	<request-map uri="findAdPrimkey">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="findAdPrimkey"></response>
+	</request-map>
+	<request-map uri="createAdPrimkey">
+		<security https="false" auth="true"/>
+		<event type="service" invoke="createAdPrimkey"/>
+		<response name="success" type="none"></response>
+	</request-map>
+	<request-map uri="updateAdPrimkey">
+		<security https="false" auth="true"/>
+		<event type="service" invoke="updateAdPrimkey"/>
+		<response name="success" type="none"></response>
+	</request-map>
+	<request-map uri="deleteAdPrimkey">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteAdPrimkey"/>
+		<response name="success" type="none"></response>
+	</request-map>
+	<!-- AdPrimkey start -->
+	
+	<!-- AdRelation start -->
+	<request-map uri="findAdRelation">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="findAdRelation"></response>
+	</request-map>
+	<request-map uri="createAdRelation">
+		<security https="false" auth="true"/>
+		<event type="service" invoke="createAdRelation"/>
+		<response name="success" type="none"></response>
+	</request-map>
+	<request-map uri="updateAdRelation">
+		<security https="false" auth="true"/>
+		<event type="service" invoke="updateAdRelation"/>
+		<response name="success" type="none"></response>
+	</request-map>
+	<request-map uri="deleteAdRelation">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteAdRelation"/>
+		<response name="success" type="none"></response>
+	</request-map>
+	<!-- AdRelation start -->
+	
+	<!-- AdKeymap start -->
+	<request-map uri="findAdKeymap">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="findAdKeymap"></response>
+	</request-map>
+	<request-map uri="createAdKeymap">
+		<security https="false" auth="true"/>
+		<event type="service" invoke="createAdKeymap"/>
+		<response name="success" type="none"></response>
+	</request-map>
+	<request-map uri="updateAdKeymap">
+		<security https="false" auth="true"/>
+		<event type="service" invoke="updateAdKeymap"/>
+		<response name="success" type="none"></response>
+	</request-map>
+	<request-map uri="deleteAdKeymap">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteAdKeymap"/>
+		<response name="success" type="none"></response>
+	</request-map>
+	<!-- AdKeymap start -->
+	
+	
+	<view-map name="main"   type="screen" page="component://devtools/widget/DevToolsScreens.xml#main"/>
+	<!-- AdModule view-map start -->
+	<view-map name="findAdModule" type="screen" page="component://devtools/widget/DevToolsScreens.xml#findAdModule"></view-map>
+ 	<view-map name="editAdModule" type="screen" page="component://devtools/widget/DevToolsScreens.xml#editAdModule"></view-map>
+ 	<!-- AdEntity view-map start -->
+ 	<view-map name="findAdEntity" type="screen" page="component://devtools/widget/DevToolsScreens.xml#findAdEntity"></view-map>
+ 	<view-map name="editAdEntity" type="screen" page="component://devtools/widget/DevToolsScreens.xml#editAdEntity"></view-map>
+ 	<!-- AdField  view-map start -->
+ 	<view-map name="findAdField"  type="screen" page="component://devtools/widget/DevToolsScreens.xml#findAdField"></view-map>
+ 	<!-- <view-map name="editAdField"  type="screen" page="component://devtools/widget/DevToolsScreens.xml#editAdField"></view-map> -->
+	<!-- AdPrimkey view-map start -->
+	<view-map name="findAdPrimkey" type="screen" page="component://devtools/widget/DevToolsScreens.xml#findAdPrimkey"></view-map>
+	<!-- AdRelation view-map start -->
+	<view-map name="findAdRelation"  type="screen" page="component://devtools/widget/DevToolsScreens.xml#findAdRelation"></view-map>
+	<!-- AdKeymap view-map start -->
+	<view-map name="findAdKeymap"  type="screen" page="component://devtools/widget/DevToolsScreens.xml#findAdKeymap"></view-map>
+	
+</site-conf>

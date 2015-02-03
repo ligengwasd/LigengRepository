@@ -1,0 +1,106 @@
+<html>
+<head>
+<title>login</title>
+<link href="css/login.css" type=text/css rel=stylesheet />
+</head>
+<body id="userlogin_body" >
+    <div class="body">
+
+<!--  
+    <div>
+		
+		<div class="left">  
+		<p>left</p>
+		</div>
+		<div class="right">
+		  <p>right</p>
+		</div>
+		<div class="center">
+		<p>con</p>
+		<p>con</p>
+		</div>
+    </div>
+	-->
+	 
+    <div>
+	    <div class="login-top-container"></div>
+	    <div class="login-top-container-clear"></div>
+	    <div class="login-top-section"></div>
+    </div>
+
+    <div>
+	    <div class="login-logo-container"></div><div class="login-logo-container-clear"></div>
+	    <div class="login-logo-section">
+	        <div id="login-logo"><img src="images/login-logo.gif"/> CHINA TALENT GROUP</div>
+	    </div>
+    </div>
+    <div class="login-blank"></div>
+
+
+<div>
+	<div class="login-content-container"></div><div class="login-content-container-clear"></div>
+	<div class="login-content-section">
+	   
+	   <div class="outer-range">
+	      <div class="display-content inner" ><img src="images/loginnew_24.gif" /></div>
+	      <div class="display-form inner ">
+	      
+	      
+	<!-- <div>
+	    <div class="login-form-container"></div>
+	    <div class="login-form-container-clear"></div>
+	    <div class="login-form-section"></div>
+    </div> -->
+	         
+	    <form method="post" action="<@ofbizUrl>login</@ofbizUrl>" name="loginform">
+        <table class="basic-table" cellspacing="0">
+          <tr>
+            <td class="label"><!-- ${uiLabelMap.CommonUsername} --></td>
+            <td><input type="text" name="USERNAME" value="${username}" size="20"/></td>
+          </tr>
+          <tr>
+            <td class="label"><!-- ${uiLabelMap.CommonPassword} --></td>
+            <td><input type="password" name="PASSWORD" value="" size="20"/></td>
+          </tr>
+          
+          <tr>
+            <td colspan="2" align="center">
+              <!-- <input type="submit" value="${uiLabelMap.CommonLogin}"/> -->
+              <input type="submit" value="Login"/>
+            </td>
+          </tr>
+        </table>
+        <input type="hidden" name="JavaScriptEnabled" value="N"/>
+        <br />
+        <!-- <a href="<@ofbizUrl>forgotPassword</@ofbizUrl>">${uiLabelMap.CommonForgotYourPassword}?</a> -->
+      </form>
+      
+	      </div>
+	   </div>
+	</div>
+</div>
+
+<div>
+	<div class="login-main-container"></div><div class="login-main-container-clear"></div>
+	<div class="login-main-section">
+	   <div class="outer-range">
+	       <div class="inner">.</div>
+	       <div class="inner">.</div>
+	       <div id="powered" class="inner "><img src="images/powered.gif" /></div>
+	   </div>
+	</div>
+</div>
+
+<div>
+	<div class="login-footer-container"></div><div class="login-footer-container-clear"></div>
+	<div class="login-footer-section">
+	   
+	   <div style="text-align: center; font-size: 12px;color: #565656;" > Copyright @2012 CTG. All Rights Reserved</div>
+	    
+	</div>
+</div>
+
+
+        </div>
+    </body>
+</html>

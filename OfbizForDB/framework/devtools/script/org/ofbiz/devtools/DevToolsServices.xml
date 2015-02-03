@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/simple-methods-v2.xsd">
+    <!-- AdModule start -->
+	<simple-method method-name="deleteAdModule">
+		<entity-one entity-name="AdModule" value-field="adModule" ></entity-one>
+		<remove-value value-field="adModule"/>
+	</simple-method>
+	<simple-method method-name="createAdModule">
+		<check-errors/>
+		<make-value value-field="newEntity" entity-name="AdModule"/>
+		<make-next-seq-id seq-field-name="adModuleId" value-field="newEntity"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"></set-nonpk-fields>
+		<create-value value-field="newEntity"/>
+	</simple-method>
+	<simple-method method-name="updateAdModule">
+		<make-value value-field="newEntity" entity-name="AdModule" />
+		<set-pk-fields value-field="newEntity" map="parameters"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"/>
+		<create-value value-field="newEntity" or-store="true"/>
+	</simple-method>
+	<!-- AdModule end -->
+	<!-- AdEntity start -->
+	<simple-method method-name="deleteAdEntity">
+		<entity-one entity-name="AdEntity" value-field="adEntity" ></entity-one>
+		<remove-value value-field="adEntity"/>
+	</simple-method>
+	<simple-method method-name="createAdEntity">
+		<check-errors/>
+		<make-value value-field="newEntity" entity-name="AdEntity"/>
+		<make-next-seq-id seq-field-name="adEntityId" value-field="newEntity"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"></set-nonpk-fields>
+		<create-value value-field="newEntity"/>
+	</simple-method>
+	<simple-method method-name="updateAdEntity">
+		<make-value value-field="newEntity" entity-name="AdEntity" />
+		<set-pk-fields value-field="newEntity" map="parameters"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"/>
+		<create-value value-field="newEntity" or-store="true"/>
+	</simple-method>
+	<!-- AdEntity end -->
+	<!-- AdField start -->
+	<simple-method method-name="deleteAdField">
+		<entity-one entity-name="AdField" value-field="adField" ></entity-one>
+		<remove-value value-field="adField"/>
+	</simple-method>
+	<simple-method method-name="createAdField">
+		<check-errors/>
+		<make-value value-field="newEntity" entity-name="AdField"/>
+		<make-next-seq-id seq-field-name="adFieldId" value-field="newEntity"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"></set-nonpk-fields>
+		<create-value value-field="newEntity"/>
+	</simple-method>
+	<simple-method method-name="updateAdField">
+		<make-value value-field="newEntity" entity-name="AdField" />
+		<set-pk-fields value-field="newEntity" map="parameters"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"/>
+		<create-value value-field="newEntity" or-store="true"/>
+	</simple-method>
+	<!-- AdField end -->
+	<!-- AdPrimkey start -->
+	<simple-method method-name="deleteAdPrimkey">
+		<entity-one entity-name="AdPrimkey" value-field="adPrimkey" ></entity-one>
+		<remove-value value-field="adPrimkey"/>
+	</simple-method>
+	<simple-method method-name="createAdPrimkey">
+		<check-errors/>
+		<make-value value-field="newEntity" entity-name="AdPrimkey"/>
+		<make-next-seq-id seq-field-name="adPrimkeyId" value-field="newEntity"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"></set-nonpk-fields>
+		<create-value value-field="newEntity"/>
+	</simple-method>
+	<simple-method method-name="updateAdPrimkey">
+		<make-value value-field="newEntity" entity-name="AdPrimkey" />
+		<set-pk-fields value-field="newEntity" map="parameters"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"/>
+		<create-value value-field="newEntity" or-store="true"/>
+	</simple-method>
+	<!-- AdPrimkey start -->
+	<!-- AdRelation start -->
+	<simple-method method-name="deleteAdRelation">
+		<entity-one entity-name="AdRelation" value-field="adRelation" ></entity-one>
+		<remove-value value-field="adRelation"/>
+	</simple-method>
+	<simple-method method-name="createAdRelation">
+		<check-errors/>
+		<make-value value-field="newEntity" entity-name="AdRelation"/>
+		<make-next-seq-id seq-field-name="adRelationId" value-field="newEntity"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"></set-nonpk-fields>
+		<create-value value-field="newEntity"/>
+	</simple-method>
+	<simple-method method-name="updateAdRelation">
+		<make-value value-field="newEntity" entity-name="AdRelation" />
+		<set-pk-fields value-field="newEntity" map="parameters"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"/>
+		<create-value value-field="newEntity" or-store="true"/>
+	</simple-method>
+	<!-- AdRelation end -->
+	
+	<!-- AdKeymap start -->
+	<simple-method method-name="deleteAdKeymap">
+		<entity-one entity-name="AdKeymap" value-field="adKeymap" ></entity-one>
+		<remove-value value-field="adKeymap"/>
+	</simple-method>
+	<simple-method method-name="createAdKeymap">
+		<check-errors/>
+		<make-value value-field="newEntity" entity-name="AdKeymap"/>
+		<make-next-seq-id seq-field-name="adKeymapId" value-field="newEntity"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"></set-nonpk-fields>
+		<create-value value-field="newEntity"/>
+	</simple-method>
+	<simple-method method-name="updateAdKeymap">
+		<make-value value-field="newEntity" entity-name="AdKeymap" />
+		<set-pk-fields value-field="newEntity" map="parameters"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"/>
+		<create-value value-field="newEntity" or-store="true"/>
+	</simple-method>
+	<!-- AdKeymap end -->
+	
+	<!-- AdService start -->
+	<simple-method method-name="deleteAdService">
+		<entity-one entity-name="AdService" value-field="adService" ></entity-one>
+		<remove-value value-field="adService"/>
+	</simple-method>
+	<simple-method method-name="createAdService">
+		<check-errors/>
+		<make-value value-field="newEntity" entity-name="AdService"/>
+		<make-next-seq-id seq-field-name="adServiceId" value-field="newEntity"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"></set-nonpk-fields>
+		<create-value value-field="newEntity"/>
+	</simple-method>
+	<simple-method method-name="updateAdService">
+		<make-value value-field="newEntity" entity-name="AdService" />
+		<set-pk-fields value-field="newEntity" map="parameters"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"/>
+		<create-value value-field="newEntity" or-store="true"/>
+	</simple-method>
+	<!-- AdService end -->
+	
+	<!-- AdAttribute start -->
+	<simple-method method-name="deleteAdAttribute">
+		<entity-one entity-name="AdAttribute" value-field="adAttribute" ></entity-one>
+		<remove-value value-field="adAttribute"/>
+	</simple-method>
+	<simple-method method-name="createAdAttribute">
+		<check-errors/>
+		<make-value value-field="newEntity" entity-name="AdAttribute"/>
+		<make-next-seq-id seq-field-name="adAttributeId" value-field="newEntity"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"></set-nonpk-fields>
+		<create-value value-field="newEntity"/>
+	</simple-method>
+	<simple-method method-name="updateAdAttribute">
+		<make-value value-field="newEntity" entity-name="AdAttribute" />
+		<set-pk-fields value-field="newEntity" map="parameters"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"/>
+		<create-value value-field="newEntity" or-store="true"/>
+	</simple-method>
+	<!-- AdAttribute end -->
+	
+	<!-- AdViewmap start -->
+	<simple-method method-name="deleteAdViewmap">
+		<entity-one entity-name="AdViewmap" value-field="adViewmap" ></entity-one>
+		<remove-value value-field="adViewmap"/>
+	</simple-method>
+	<simple-method method-name="createAdViewmap">
+		<check-errors/>
+		<make-value value-field="newEntity" entity-name="AdViewmap"/>
+		<make-next-seq-id seq-field-name="adViewmapId" value-field="newEntity"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"></set-nonpk-fields>
+		<create-value value-field="newEntity"/>
+	</simple-method>
+	<simple-method method-name="updateAdViewmap">
+		<make-value value-field="newEntity" entity-name="AdViewmap" />
+		<set-pk-fields value-field="newEntity" map="parameters"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"/>
+		<create-value value-field="newEntity" or-store="true"/>
+	</simple-method>
+	<!-- AdViewmap end -->
+	
+	<!-- AdSecurity start -->
+	<simple-method method-name="deleteAdSecurity">
+		<entity-one entity-name="AdSecurity" value-field="adSecurity" ></entity-one>
+		<remove-value value-field="adSecurity"/>
+	</simple-method>
+	<simple-method method-name="createAdSecurity">
+		<check-errors/>
+		<make-value value-field="newEntity" entity-name="AdSecurity"/>
+		<make-next-seq-id seq-field-name="adSecurityId" value-field="newEntity"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"></set-nonpk-fields>
+		<create-value value-field="newEntity"/>
+	</simple-method>
+	<simple-method method-name="updateAdSecurity">
+		<make-value value-field="newEntity" entity-name="AdSecurity" />
+		<set-pk-fields value-field="newEntity" map="parameters"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"/>
+		<create-value value-field="newEntity" or-store="true"/>
+	</simple-method>
+	<!-- AdSecurity end -->
+	
+	<!-- AdEvent start -->
+	<simple-method method-name="deleteAdEvent">
+		<entity-one entity-name="AdEvent" value-field="adEvent" ></entity-one>
+		<remove-value value-field="adEvent"/>
+	</simple-method>
+	<simple-method method-name="createAdEvent">
+		<check-errors/>
+		<make-value value-field="newEntity" entity-name="AdEvent"/>
+		<make-next-seq-id seq-field-name="adEventId" value-field="newEntity"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"></set-nonpk-fields>
+		<create-value value-field="newEntity"/>
+	</simple-method>
+	<simple-method method-name="updateAdEvent">
+		<make-value value-field="newEntity" entity-name="AdEvent" />
+		<set-pk-fields value-field="newEntity" map="parameters"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"/>
+		<create-value value-field="newEntity" or-store="true"/>
+	</simple-method>
+	<!-- AdEvent end -->
+	
+	<!-- AdRequestmap start -->
+	<simple-method method-name="deleteAdRequestmap">
+		<entity-one entity-name="AdRequestmap" value-field="adRequestmap" ></entity-one>
+		<remove-value value-field="adRequestmap"/>
+	</simple-method>
+	<simple-method method-name="createAdRequestmap">
+		<check-errors/>
+		<make-value value-field="newEntity" entity-name="AdRequestmap"/>
+		<make-next-seq-id seq-field-name="adRequestmapId" value-field="newEntity"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"></set-nonpk-fields>
+		<create-value value-field="newEntity"/>
+	</simple-method>
+	<simple-method method-name="updateAdRequestmap">
+		<make-value value-field="newEntity" entity-name="AdRequestmap" />
+		<set-pk-fields value-field="newEntity" map="parameters"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"/>
+		<create-value value-field="newEntity" or-store="true"/>
+	</simple-method>
+	<!-- AdRequestmap end -->
+	
+	<!-- AdResponse start -->
+	<simple-method method-name="deleteAdResponse">
+		<entity-one entity-name="AdResponse" value-field="adResponse" ></entity-one>
+		<remove-value value-field="adResponse"/>
+	</simple-method>
+	<simple-method method-name="createAdResponse">
+		<check-errors/>
+		<make-value value-field="newEntity" entity-name="AdResponse"/>
+		<make-next-seq-id seq-field-name="adResponseId" value-field="newEntity"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"></set-nonpk-fields>
+		<create-value value-field="newEntity"/>
+	</simple-method>
+	<simple-method method-name="updateAdResponse">
+		<make-value value-field="newEntity" entity-name="AdResponse" />
+		<set-pk-fields value-field="newEntity" map="parameters"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"/>
+		<create-value value-field="newEntity" or-store="true"/>
+	</simple-method>
+	<!-- AdResponse end -->
+	
+	<!-- AdForm start -->
+	<simple-method method-name="deleteAdForm">
+		<entity-one entity-name="AdForm" value-field="adForm" ></entity-one>
+		<remove-value value-field="adForm"/>
+	</simple-method>
+	<simple-method method-name="createAdForm">
+		<check-errors/>
+		<make-value value-field="newEntity" entity-name="AdForm"/>
+		<make-next-seq-id seq-field-name="adFormId" value-field="newEntity"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"></set-nonpk-fields>
+		<create-value value-field="newEntity"/>
+	</simple-method>
+	<simple-method method-name="updateAdForm">
+		<make-value value-field="newEntity" entity-name="AdForm" />
+		<set-pk-fields value-field="newEntity" map="parameters"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"/>
+		<create-value value-field="newEntity" or-store="true"/>
+	</simple-method>
+	<!-- AdForm end -->
+	
+	<!-- AdFormfield start -->
+	<simple-method method-name="deleteAdFormfield">
+		<entity-one entity-name="AdFormfield" value-field="adFormfield" ></entity-one>
+		<remove-value value-field="adFormfield"/>
+	</simple-method>
+	<simple-method method-name="createAdFormfield">
+		<check-errors/>
+		<make-value value-field="newEntity" entity-name="AdFormfield"/>
+		<make-next-seq-id seq-field-name="adFormfieldId" value-field="newEntity"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"></set-nonpk-fields>
+		<create-value value-field="newEntity"/>
+	</simple-method>
+	<simple-method method-name="updateAdFormfield">
+		<make-value value-field="newEntity" entity-name="AdFormfield" />
+		<set-pk-fields value-field="newEntity" map="parameters"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"/>
+		<create-value value-field="newEntity" or-store="true"/>
+	</simple-method>
+	<!-- AdFormfield end -->
+	
+	<!-- AdFormcommand start -->
+	<simple-method method-name="deleteAdFormcommand">
+		<entity-one entity-name="AdFormcommand" value-field="adFormcommand" ></entity-one>
+		<remove-value value-field="adFormcommand"/>
+	</simple-method>
+	<simple-method method-name="createAdFormcommand">
+		<check-errors/>
+		<make-value value-field="newEntity" entity-name="AdFormcommand"/>
+		<make-next-seq-id seq-field-name="adFormcommandId" value-field="newEntity"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"></set-nonpk-fields>
+		<create-value value-field="newEntity"/>
+	</simple-method>
+	<simple-method method-name="updateAdFormcommand">
+		<make-value value-field="newEntity" entity-name="AdFormcommand" />
+		<set-pk-fields value-field="newEntity" map="parameters"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"/>
+		<create-value value-field="newEntity" or-store="true"/>
+	</simple-method>
+	<!-- AdFormcommand end -->
+	
+	<!-- AdGrid start -->
+	<simple-method method-name="deleteAdGrid">
+		<entity-one entity-name="AdGrid" value-field="adGrid" ></entity-one>
+		<remove-value value-field="adGrid"/>
+	</simple-method>
+	<simple-method method-name="createAdGrid">
+		<check-errors/>
+		<make-value value-field="newEntity" entity-name="AdGrid"/>
+		<make-next-seq-id seq-field-name="adGridId" value-field="newEntity"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"></set-nonpk-fields>
+		<create-value value-field="newEntity"/>
+	</simple-method>
+	<simple-method method-name="updateAdGrid">
+		<make-value value-field="newEntity" entity-name="AdGrid" />
+		<set-pk-fields value-field="newEntity" map="parameters"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"/>
+		<create-value value-field="newEntity" or-store="true"/>
+	</simple-method>
+	<!-- AdGrid end -->
+	
+	<!-- AdGridfield start -->
+	<simple-method method-name="deleteAdGridfield">
+		<entity-one entity-name="AdGridfield" value-field="adGridfield" ></entity-one>
+		<remove-value value-field="adGridfield"/>
+	</simple-method>
+	<simple-method method-name="createAdGridfield">
+		<check-errors/>
+		<make-value value-field="newEntity" entity-name="AdGridfield"/>
+		<make-next-seq-id seq-field-name="adGridfieldId" value-field="newEntity"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"></set-nonpk-fields>
+		<create-value value-field="newEntity"/>
+	</simple-method>
+	<simple-method method-name="updateAdGridfield">
+		<make-value value-field="newEntity" entity-name="AdGridfield" />
+		<set-pk-fields value-field="newEntity" map="parameters"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"/>
+		<create-value value-field="newEntity" or-store="true"/>
+	</simple-method>
+	<simple-method method-name="hideGridField">
+		<entity-one value-field="adGridField" entity-name="AdGridfield"></entity-one>
+		<set field="width" value="0" />
+		<store-value value-field="adGridField"/>
+	</simple-method>
+	<!-- AdGridfield end -->
+	
+	<!-- AdGridcommand start -->
+	<simple-method method-name="deleteAdGridcommand">
+		<entity-one entity-name="AdGridcommand" value-field="adGridcommand" ></entity-one>
+		<remove-value value-field="adGridcommand"/>
+	</simple-method>
+	<simple-method method-name="createAdGridcommand">
+		<check-errors/>
+		<make-value value-field="newEntity" entity-name="AdGridcommand"/>
+		<make-next-seq-id seq-field-name="adGridcommandId" value-field="newEntity"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"></set-nonpk-fields>
+		<create-value value-field="newEntity"/>
+	</simple-method>
+	<simple-method method-name="updateAdGridcommand">
+		<make-value value-field="newEntity" entity-name="AdGridcommand" />
+		<set-pk-fields value-field="newEntity" map="parameters"/>
+		<set-nonpk-fields value-field="newEntity" map="parameters"/>
+		<create-value value-field="newEntity" or-store="true"/>
+	</simple-method>
+	<!-- AdGridcommand end -->
+</simple-methods>

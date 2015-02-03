@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+    <!-- The controller elements that are common to all OFBiz components
+         can be found in the following xml file. A component can override the
+         elements found in the common-controller.xml file. -->
+    <include location="component://common/webcommon/WEB-INF/common-controller.xml"/>
+    <description>DevTools Component Site Configuration File</description>
+
+    <request-map uri="generateEntityInfo">
+		<security https="true" auth="true"/>
+		<event type="service"   invoke="generateEntityInfo"/>
+		<response name="success" type="view" value="editAdEntity"/>
+	</request-map>
+
+	<request-map uri="main">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="main"/>
+	</request-map>
+	<!-- AdModule start -->
+	<request-map uri="findAdModule">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="findAdModule"></response>
+	</request-map>
+	<request-map uri="editAdModule">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="editAdModule"></response>
+	</request-map>
+	<request-map uri="createAdModule">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createAdModule" />
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="updateAdModule">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateAdModule" />
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="deleteAdModule">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteAdModule" />
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<!-- AdModule end -->
+	
+	<!-- AdEntity start -->
+	<request-map uri="findAdEntity">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="findAdEntity"></response>
+	</request-map>
+	<request-map uri="editAdEntity">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="editAdEntity"></response>
+	</request-map>
+	<request-map uri="createAdEntity">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createAdEntity"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="updateAdEntity">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateAdEntity"/>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	<request-map uri="deleteAdEntity">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteAdEntity"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<!-- AdEntity end -->
+	
+	<!-- AdField start -->
+	<request-map uri="findAdField">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="findAdField"></response>
+	</request-map>
+	<request-map uri="createAdField">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createAdField"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="updateAdField">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateAdField"/>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	<request-map uri="deleteAdField">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteAdField"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<!-- AdField end -->
+	
+	<!-- AdPrimkey start -->
+	<request-map uri="findAdPrimkey">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="findAdPrimkey"></response>
+	</request-map>
+	<request-map uri="createAdPrimkey">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createAdPrimkey"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="updateAdPrimkey">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateAdPrimkey"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="deleteAdPrimkey">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteAdPrimkey"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<!-- AdPrimkey start -->
+	
+	<!-- AdRelation start -->
+	<request-map uri="findAdRelation">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="findAdRelation"></response>
+	</request-map>
+	<request-map uri="createAdRelation">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createAdRelation"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="updateAdRelation">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateAdRelation"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="deleteAdRelation">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteAdRelation"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<!-- AdRelation start -->
+	
+	<!-- AdKeymap start -->
+	<request-map uri="findAdKeymap">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="findAdKeymap"></response>
+	</request-map>
+	<request-map uri="createAdKeymap">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createAdKeymap"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="updateAdKeymap">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateAdKeymap"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="deleteAdKeymap">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteAdKeymap"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<!-- AdKeymap start -->
+	
+	<!-- AdService start -->
+	<request-map uri="findAdService">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="findAdService"></response>
+	</request-map>
+	<request-map uri="createAdService">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createAdService"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="editAdService">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="editAdService"></response>
+	</request-map>
+	<request-map uri="updateAdService">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateAdService"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="deleteAdService">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteAdService"/>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	<!-- AdService end -->
+	
+	<!-- AdAttribute start -->
+	<request-map uri="findAdAttribute">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="findAdAttribute"></response>
+	</request-map>
+	<request-map uri="createAdAttribute">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createAdAttribute"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="updateAdAttribute">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateAdAttribute"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="deleteAdAttribute">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteAdAttribute"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<!-- AdAttribute start -->
+	
+	<!-- AdEvent  start -->
+	<request-map uri="findAdEvent">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="findAdEvent"></response>
+	</request-map>
+	<request-map uri="createAdEvent">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createAdEvent"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="updateAdEvent">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateAdEvent"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="deleteAdEvent">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteAdEvent"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<!-- AdEvent  end -->
+	
+	<!-- AdRequestmap  start -->
+	<request-map uri="findAdRequestmap">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="findAdRequestmap"></response>
+	</request-map>
+	<request-map uri="createAdRequestmap">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createAdRequestmap"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="editAdRequestmap">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="editAdRequestmap"></response>
+	</request-map>
+	<request-map uri="updateAdRequestmap">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateAdRequestmap"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="deleteAdRequestmap">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteAdRequestmap"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<!-- AdRequestmap  end -->
+	
+	<!-- AdResponse  start -->
+	<request-map uri="findAdResponse">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="findAdResponse"></response>
+	</request-map>
+	<request-map uri="createAdResponse">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createAdResponse"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="updateAdResponse">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateAdResponse"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="deleteAdResponse">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteAdResponse"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<!-- AdResponse  end -->
+	
+	<!-- AdViewmap  start -->
+	<request-map uri="findAdViewmap">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="findAdViewmap"></response>
+	</request-map>
+	<request-map uri="createAdViewmap">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createAdViewmap"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="editAdViewmap">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="editAdViewmap"></response>
+	</request-map>
+	<request-map uri="updateAdViewmap">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateAdViewmap"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="deleteAdViewmap">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteAdViewmap"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<!-- AdViewmap  end -->
+	
+	<!-- AdForm  start -->
+	<request-map uri="findAdForm">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="findAdForm"></response>
+	</request-map>
+	<request-map uri="createAdForm">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createAdForm"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="editAdForm">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="editAdForm"></response>
+	</request-map>
+	<request-map uri="updateAdForm">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateAdForm"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="deleteAdForm">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteAdForm"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<!-- AdForm  end -->
+	
+	<!-- AdFormfield  start -->
+	<request-map uri="findAdFormfield">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="findAdFormfield"></response>
+	</request-map>
+	<request-map uri="createAdFormfield">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createAdFormfield"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="updateAdFormfield">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateAdFormfield"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="deleteAdFormfield">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteAdFormfield"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<!-- AdFormfield  start -->
+	
+	<!-- AdGrid  start -->
+	<request-map uri="findAdGrid">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="findAdGrid"></response>
+	</request-map>
+	<request-map uri="createAdGrid">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createAdGrid"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="editAdGrid">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="editAdGrid"></response>
+	</request-map>
+	<request-map uri="updateAdGrid">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateAdGrid"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="deleteAdGrid">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteAdGrid"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<!-- AdGrid  end -->
+	
+	<!-- AdGridfield  start -->
+	
+	<request-map uri="findAdGridfield">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="findAdGridfield"></response>
+	</request-map>
+	<request-map uri="createAdGridfield">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createAdGridfield"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="editAdGridfield">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="editAdGridfield"></response>
+	</request-map>
+	<request-map uri="updateAdGridfield">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateAdGridfield"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="deleteAdGridfield">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteAdGridfield"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="hideGridField">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="hideGridField"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<!-- AdGridfield  end -->
+	
+	<!-- AdGridcommand  start -->
+	<request-map uri="findAdGridcommand">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="findAdGridcommand"></response>
+	</request-map>
+	<request-map uri="createAdGridcommand">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createAdGridcommand"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="updateAdGridcommand">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateAdGridcommand"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="deleteAdGridcommand">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteAdGridcommand"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+		<request-map uri="hideGridcommand">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="hideGridcommand"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="createServiceByEntity">
+		<security https="true" auth="true"/>
+		<event type="service"   invoke="createServiceByEntity"/>
+		<response name="success" type="request" value="json"/>
+	</request-map>
+	<request-map uri="createControllerByEntity">
+		<security https="true" auth="true"/>
+		<event type="service"   invoke="createControllerByEntity"/>
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json"/>
+	</request-map>
+	<request-map uri="createFormByEntity">
+		<security https="true" auth="true"/>
+		<event type="service"   invoke="createFormByEntity"/>
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json"/>
+	</request-map>
+	<request-map uri="createGridByEntity">
+		<security https="true" auth="true"/>
+		<event type="service"   invoke="createGridByEntity"/>
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json"/>
+	</request-map>
+	<request-map uri="createServiceFile">
+		<security https="true" auth="true"/>
+		<event type="service"   invoke="createServiceFile"/>
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json"/>
+	</request-map>
+	<request-map uri="createControllerFile">
+		<security https="true" auth="true"/>
+		<event type="service"   invoke="createControllerFile"/>
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json"/>
+	</request-map>
+	<request-map uri="createEntityFile">
+		<security https="true" auth="true"/>
+		<event type="service"   invoke="createEntityFile"/>
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json"/>
+	</request-map>
+	<request-map uri="createFormFile">
+		<security https="true" auth="true"/>
+		<event type="service"   invoke="createFormFile"/>
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json"/>
+	</request-map>
+	<request-map uri="createGridFile">
+		<security https="true" auth="true"/>
+		<event type="service"   invoke="createGridFile"/>
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json"/>
+	</request-map>
+	<request-map uri="createMainPage">
+		<security https="true" auth="true"/>
+		<event type="service"   invoke="createMainPage"/>
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json"/>
+	</request-map>
+	<request-map uri="createJavaByEntity">
+		<security https="true" auth="true"/>
+		<event type="service"   invoke="createJavaByEntity"/>
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json"/>
+	</request-map>
+	<request-map uri="FindAdFormcommand">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="FindAdFormcommand"/>
+	</request-map>
+	<request-map uri="createAdFormcommand">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createAdFormcommand"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="updateAdFormcommand">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateAdFormcommand"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<request-map uri="deleteAdFormcommand">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteAdFormcommand"/>
+		<response name="success" type="request" value="json" ></response>
+		<response name="error" type="request" value="json" ></response>
+	</request-map>
+	<!-- AdGrid  end -->
+	
+	<!-- 
+	<view-map name="main"   type="screen" page="component://devtools/widget/DevToolsScreens.xml#main"/>
+	 -->
+	<view-map name="main"   type="screen" page="./framework/devtools/widget/DevToolsScreens.xml#main"/>
+	<!-- AdModule view-map start -->
+	<view-map name="findAdModule" type="screen" page="component://devtools/widget/DevToolsScreens.xml#findAdModule"></view-map>
+ 	<view-map name="editAdModule" type="screen" page="component://devtools/widget/DevToolsScreens.xml#editAdModule"></view-map>
+ 	<!-- AdEntity view-map start -->
+ 	<view-map name="findAdEntity" type="screen" page="component://devtools/widget/DevToolsScreens.xml#findAdEntity"></view-map>
+ 	<view-map name="editAdEntity" type="screen" page="component://devtools/widget/DevToolsScreens.xml#editAdEntity"></view-map>
+ 	<!-- AdField  view-map start -->
+ 	<view-map name="findAdField"  type="screen" page="component://devtools/widget/DevToolsScreens.xml#findAdField"></view-map>
+ 	<!-- <view-map name="editAdField"  type="screen" page="component://devtools/widget/DevToolsScreens.xml#editAdField"></view-map> -->
+	<!-- AdPrimkey view-map start -->
+	<view-map name="findAdPrimkey" type="screen" page="component://devtools/widget/DevToolsScreens.xml#findAdPrimkey"></view-map>
+	<!-- AdRelation view-map start -->
+	<view-map name="findAdRelation"  type="screen" page="component://devtools/widget/DevToolsScreens.xml#findAdRelation"></view-map>
+	<!-- AdKeymap view-map start -->
+	<view-map name="findAdKeymap"  type="screen" page="component://devtools/widget/DevToolsScreens.xml#findAdKeymap"></view-map>
+	<!-- AdService view-map start-->
+	<view-map name="findAdService" type="screen" page="component://devtools/widget/DevToolsScreens.xml#findAdService"></view-map>
+	<view-map name="editAdService" type="screen" page="component://devtools/widget/DevToolsScreens.xml#editAdService"></view-map>
+ 	<!-- AdAttribute view-map start-->
+ 	<view-map name="findAdAttribute" type="screen" page="component://devtools/widget/DevToolsScreens.xml#findAdAttribute"></view-map>
+ 	<!-- AdEvent view-map start -->
+ 	<view-map name="findAdEvent" type="screen" page="component://devtools/widget/DevToolsScreens.xml#findAdEvent"></view-map>
+ 	<!-- AdRequestmap view-map start -->
+ 	<view-map name="findAdRequestmap" type="screen" page="component://devtools/widget/DevToolsScreens.xml#findAdRequestmap"></view-map>
+ 	<view-map name="editAdRequestmap" type="screen" page="component://devtools/widget/DevToolsScreens.xml#editAdRequestmap"></view-map>
+ 	<!-- AdResponse view-map start -->
+ 	<view-map name="findAdResponse" type="screen" page="component://devtools/widget/DevToolsScreens.xml#findAdResponse"></view-map>
+ 	<!-- AdViewmap view-map start -->
+ 	<view-map name="findAdViewmap" type="screen" page="component://devtools/widget/DevToolsScreens.xml#findAdViewmap"></view-map>
+ 	<view-map name="editAdViewmap" type="screen" page="component://devtools/widget/DevToolsScreens.xml#editAdViewmap"></view-map>
+ 	<!-- AdForm view-map start -->
+ 	<view-map name="findAdForm" type="screen" page="component://devtools/widget/DevToolsScreens.xml#findAdForm"></view-map>
+ 	<view-map name="editAdForm" type="screen" page="component://devtools/widget/DevToolsScreens.xml#editAdForm"></view-map>
+ 	<!-- AdFormfield view-map start -->
+ 	<view-map name="findAdFormfield" type="screen" page="component://devtools/widget/DevToolsScreens.xml#findAdFormfield"></view-map>
+ 	<!-- AdGrid view-map start -->
+ 	<view-map name="findAdGrid" type="screen" page="component://devtools/widget/DevToolsScreens.xml#findAdGrid"></view-map>
+ 	<view-map name="editAdGrid" type="screen" page="component://devtools/widget/DevToolsScreens.xml#editAdGrid"></view-map>
+ 	<!-- AdGridfield view-map start -->
+ 	<view-map name="findAdGridfield" type="screen" page="component://devtools/widget/DevToolsScreens.xml#findAdGridfield"></view-map>
+ 	<!-- AdGridcommand view-map start -->
+ 	<view-map name="findAdGridcommand" type="screen" page="component://devtools/widget/DevToolsScreens.xml#findAdGridcommand"></view-map>
+ 	
+ 	
+</site-conf>

@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="../../base/dtd/widget-form.xsd">
+
+    <form name="generateEntityInfo" type="single"   focus-field-name="tableName" target="generateEntityInfo" header-row-style="header-row" default-table-style="basic-table">
+         <field name="tableName" title="${uiLabelMap.tableName}"  >
+     		<text size="40" maxlength="60"/>
+         </field>
+   		 <field name="generateEntityInfo" title="插入实体信息" widget-style="smallSubmit">
+		    <submit/>
+		</field>
+    </form>
+	<!-- AdModule form start -->
+	<form name="findAdModule" type="single"  header-row-style="header-row" default-table-style="basic-table" default-entity-name="AdModule">
+		<field name="noConditionFind"><hidden value="Y"/></field>
+		<field name="moduleName" title="${uiLabelMap.ModuleName}" >
+			<text-find size="25"></text-find>
+		</field>
+		<field name="Refresh" title="vacant">
+			<kd-input type="button" style="k-textbox" value="刷新" updateGridName="gridAdModule"/>
+		</field>
+	</form>
+	<form name="editAdModule" type="single"  default-map-name="adModule" target="updateAdModule"   default-entity-name="AdModule"  header-row-style="header-row"> 
+		<alt-target use-when="adModuleId==null" target="createAdModule"/>
+		<field name="adModuleId" title="${uiLabelMap.AdModuleId}" ><hidden/></field>
+		<field name="moduleName" title="${uiLabelMap.ModuleName}" ><text size="40" maxlength="60"/></field>
+		<field name="title" position="2" title="${uiLabelMap.Title}" ><text size="40" maxlength="60"/></field>
+		<field name="author"  title="${uiLabelMap.Author}" ><text size="40" maxlength="60"/></field>
+		<field name="copyright" position="2" title="${uiLabelMap.Copyright}" ><text size="40" maxlength="60"/></field>
+		<field name="lineNo" title="${uiLabelMap.LineNo}" ><text size="40" maxlength="60"/></field>
+		<field name="version" position="2" title="${uiLabelMap.Version}" ><text size="40" maxlength="60"/></field>
+		<field name="description"  title="${uiLabelMap.Description}" ><text size="80" maxlength="160"/></field>
+		<field name="packageName"  title="${uiLabelMap.PackageName}" ><text size="80" maxlength="160"/></field>
+		<field name="javaFilepath"   title="${uiLabelMap.JavaFilepath}" ><text size="80" maxlength="100"/></field>
+		<field name="entityFilepath"   title="${uiLabelMap.EntityFilepath}" ><text size="80" maxlength="100"/></field>
+		<field name="entityFilename" position="2" title="${uiLabelMap.EntityFilename}" ><text size="40" maxlength="100"/></field>
+		<field name="serviceFilepath" title="${uiLabelMap.ServiceFilepath}" ><text size="80" maxlength="100"/></field>
+		<field name="serviceFilename" position="2" title="${uiLabelMap.ServiceFilename}" ><text size="40" maxlength="100"/></field>
+		<field name="configFilepath"   title="${uiLabelMap.ConfigFilepath}" ><text size="80" maxlength="100"/></field>
+		<field name="configFilename" position="2" title="${uiLabelMap.ConfigFilename}" ><text size="40" maxlength="100"/></field>
+		<field name="controllerFilepath"  title="${uiLabelMap.ControllerFilepath}" ><text size="80" maxlength="100"/></field>
+		<field name="controllerFilename"  position="2" title="${uiLabelMap.ControllerFilename}" ><text size="40" maxlength="100"/></field>
+		
+		<field name="widgetPath" title="${uiLabelMap.WidgetPath}" ><text size="80" maxlength="60"/></field>
+		<field name="formsFilename"  title="${uiLabelMap.FormsFilename}" ><text size="40" maxlength="100"/></field>
+		<field name="gridsFilename"  title="${uiLabelMap.GridsFilename}" ><text size="40" maxlength="100"/></field>
+		<field name="screensFilename" title="${uiLabelMap.ScreensFilename}" ><text size="40" maxlength="100"/></field>
+		<field name="menusFilename"  title="${uiLabelMap.MenusFilename}" ><text size="40" maxlength="100"/></field>
+		<!-- 
+		<field name="defaultResourceName" title="${uiLabelMap.DefaultResourceName}" ><text size="40" maxlength="60"/></field>
+		<field name="vendor" position="2" title="${uiLabelMap.Vendor}" ><text size="40" maxlength="60"/></field>
+		<field name="created" title="${uiLabelMap.Created}" ><text size="40" maxlength="60"/></field>
+		<field name="owner" title="${uiLabelMap.Owner}" ><text size="40" maxlength="60"/></field>
+		<field name="errorpage" position="2"  title="${uiLabelMap.Errorpage}" ><text size="40" maxlength="60"/></field>
+		<field name="filename" title="${uiLabelMap.Filename}" ><text size="40" maxlength="60"/></field>
+		 -->
+		<!-- <field name="submitButton" title="${uiLabelMap.CommonSave}" event="">
+			<submit button-type="button"/>
+		</field> -->
+		<field name="Refresh" use-when="adModuleId!=null" title="vacant">
+			<kd-input type="button" style="k-textbox" value="保存" ajaxUrl="updateAdModule"/>
+		</field>
+		<field name="Save" use-when="adModuleId==null" title="vacant">
+			<kd-input type="button" style="k-textbox" value="添加" ajaxUrl="createAdModule"/>
+		</field>
+		<field name="Reset" use-when="adModuleId==null" title="vacant">
+			<kd-input type="reset" style="k-textbox" value="重置"/>
+		</field>
+		
+	</form>
+	<!-- AdModule form end -->
+	
+	<!-- AdEntity form start -->
+	<form name="findAdEntity" type="single"  header-row-style="header-row" default-table-style="basic-table">
+		<field name="noConditionFind"><hidden value="Y"/></field>
+		<field name="adModuleId"><kd-drop-down-list type="tableDir" entity="AdModule" nameField="moduleName" valueField="adModuleId"/></field>
+		<field name="entityName" title="${uiLabelMap.EntityName}" ><text-find/></field>
+		<field name="tableName" title="${uiLabelMap.TableName}" ><text-find/></field>
+		<field name="Refresh" title="vacant">
+			<kd-input type="button" style="k-textbox" value="刷新" updateGridName="gridAdEntity" />
+		</field>
+	</form>
+	<form name="editAdEntity" type="single"  default-map-name="adEntity"  default-entity-name="AdEntity"  header-row-style="header-row" default-table-style="basic-table"> 
+		
+		<field name="adEntityId" title="${uiLabelMap.AdEntityId}" ><hidden/></field>
+		<field name="adModuleId" position="2"  title="${uiLabelMap.AdModuleId}" >
+			<kd-drop-down-list type="tableDir" entity="AdModule" nameField="moduleName" valueField="adModuleId" />
+		</field>
+		<!-- 
+		<field name="adModuleId" position="2"  title="${uiLabelMap.AdModuleId}" >
+			<drop-down allow-empty="false" text-size="20">
+				<entity-options description="${moduleName}" entity-name="AdModule" key-field-name="adModuleId">
+				</entity-options>
+			</drop-down>
+		</field>
+		 -->
+		<field name="entityName" title="${uiLabelMap.EntityName}" ><text size="40" maxlength="60"/></field>
+		<field name="tableName" position="2"  title="${uiLabelMap.TableName}" ><text size="40" maxlength="60"/></field>
+		<field name="packageName" title="${uiLabelMap.PackageName}" ><text size="40" maxlength="60"/></field>
+		<field name="description" position="2"  title="${uiLabelMap.Description}" ><text size="40" maxlength="60"/></field>
+		<field name="lineNo" title="${uiLabelMap.LineNo}" ><text size="40" maxlength="60"/></field>
+		<field name="title" position="2"  title="${uiLabelMap.Title}" ><text size="40" maxlength="60"/></field>
+		<!-- 
+		<field name="defaultResourceName" title="${uiLabelMap.DefaultResourceName}" ><text size="40" maxlength="60"/></field>
+		<field name="dependentOn" position="2"  title="${uiLabelMap.DependentOn}" ><text size="40" maxlength="60"/></field>
+		<field name="sequenceBankSize" title="${uiLabelMap.SequenceBankSize}" ><text size="40" maxlength="60"/></field>
+		<field name="enableLock" position="2"  title="${uiLabelMap.EnableLock}" ><text size="40" maxlength="60"/></field>
+		<field name="noAutoStamp" title="${uiLabelMap.NoAutoStamp}" ><text size="40" maxlength="60"/></field>
+		<field name="neverCache" position="2"  title="${uiLabelMap.NeverCache}" ><text size="40" maxlength="60"/></field>
+		<field name="neverCheck" title="${uiLabelMap.NeverCheck}" ><text size="40" maxlength="60"/></field>
+		<field name="autoClearCache" position="2"  title="${uiLabelMap.AutoClearCache}" ><text size="40" maxlength="60"/></field>
+		<field name="copyright" position="2"  title="${uiLabelMap.Copyright}" ><text size="40" maxlength="60"/></field>
+		<field name="author" title="${uiLabelMap.Author}" ><text size="40" maxlength="60"/></field>
+		<field name="version" position="2"  title="${uiLabelMap.Version}" ><text size="40" maxlength="60"/></field>
+		 -->
+		<!-- <field name="Refresh" use-when="adEntityId!=null" title="vacant">
+			<kd-input type="button" style="k-textbox" value="保存" ajaxUrl="updateAdEntity"/>
+		</field>
+		<field name="Save" use-when="adEntityId==null" title="vacant">
+			<kd-input type="button" style="k-textbox" value="添加" ajaxUrl="createAdEntity"/>
+		</field>
+		<field name="Resets" use-when="adEntityId==null" title="vacant">
+			<kd-input type="reset" style="k-textbox" value="重置"/>
+		</field>
+		<field name="Detail" title="vacant">
+			<kd-input type="button" style="k-textbox" value="获得明细" onclick="getEntityDetail()"/>
+		</field> -->
+		<!-- <field name="Refresh" use-when="adEntityId!=null" title="vacant">
+			<kd-input type="button" style="k-textbox" value="保存" ajaxUrl="updateAdEntity"/>
+		</field> -->
+		<button-list>
+			<kd-input type="button" use-when="adEntityId!=null"  style="k-textbox" value="保存" ajaxUrl="updateAdEntity" />
+			<kd-input type="button" use-when="adEntityId==null" style="k-textbox" value="添加" ajaxUrl="createAdEntity"/>
+			<kd-input type="reset" use-when="adEntityId==null" style="k-textbox" value="重置"/>
+			<kd-input type="button" style="k-textbox" value="获得明细" onclick="getEntityDetail()" />
+		</button-list>
+		
+	</form>
+	<!-- AdEntity form end -->
+	
+	<!-- AdField form start -->
+	<form name="findAdField" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<field name="noConditionFind"><hidden value="Y"/></field>
+		<field name="fieldName" title="${uiLabelMap.FieldName}" ><text size="40" maxlength="60"/></field>
+		<field name="colName" title="${uiLabelMap.ColName}" ><text size="40" maxlength="60"/></field>
+		<field name="Refresh" title="vacant">
+			<kd-input type="button" style="k-textbox" value="刷新" updateGridName="gridAdField"/>
+		</field>
+	</form>
+	<!-- AdField form end -->
+	
+	<!-- AdPrimkey form start -->
+	<form name="findAdPrimkey" type="single"  header-row-style="header-row" default-table-style="basic-table">
+		<field name="noConditionFind"><hidden value="Y"/></field>
+		<field name="adPrimkeyId" title="${uiLabelMap.AdPrimkeyId}" ><text size="40" maxlength="60"/></field>
+		<field name="adFieldId" title="${uiLabelMap.AdFieldId}" ><text size="40" maxlength="60"/></field>
+		<field name="adEntityId" title="${uiLabelMap.AdEntityId}"><text size="40" maxlength="60"/></field>
+		<field name="lineNo" title="${uiLabelMap.LineNo}" ><text size="40" maxlength="60"/></field>
+		<field name="primkeyName" title="${uiLabelMap.PrimkeyName}" ><text size="40" maxlength="60"/></field>
+		<field name="Refresh" title="vacant">
+			<kd-input type="button" style="k-textbox" value="刷新" updateGridName="gridAdPrimkey"/>
+		</field>
+	</form>
+	<!-- AdPrimkey form end -->
+	
+	<!-- AdRelation form start -->
+	<form name="findAdRelation" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<field name="noConditionFind"><hidden value="Y"/></field>
+		<field name="adRelationId" title="${uiLabelMap.AdRelationId}" ><text size="40" maxlength="60"/></field>
+		<field name="adEntityId" title="${uiLabelMap.AdEntityId}" ><text size="40" maxlength="60"/></field>
+		<field name="relEntityId" title="${uiLabelMap.RelEntityId}" ><text size="40" maxlength="60"/></field>
+		<field name="description" title="${uiLabelMap.Description}" ><text size="40" maxlength="60"/></field>
+		<field name="lineNo" title="${uiLabelMap.LineNo}" ><text size="40" maxlength="60"/></field>
+		<field name="type" title="${uiLabelMap.Type}" ><text size="40" maxlength="60"/></field>
+		<field name="title" title="${uiLabelMap.Title}" ><text size="40" maxlength="60"/></field>
+		<field name="fkName" title="${uiLabelMap.FkName}" ><text size="40" maxlength="60"/></field>
+		<field name="Refresh" title="vacant">
+			<kd-input type="button" style="k-textbox" value="刷新" updateGridName="gridAdRelation" />
+		</field>
+	</form>
+	<!-- AdRelation form end -->
+	
+	<!-- AdKeymap form start -->
+	<form name="findAdKeymap" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<field name="noConditionFind"><hidden value="Y"/></field>
+		<field name="adKeymapId" title="${uiLabelMap.AdKeymapId}" ><text-find></text-find></field>
+		<field name="adRelationId" title="${uiLabelMap.AdRelationId}" ><text-find></text-find></field>
+		<field name="adFieldId" title="${uiLabelMap.AdFieldId}" ><text size="40" maxlength="60"/></field>
+		<field name="relFieldId" title="${uiLabelMap.RelFieldId}" ><text size="40" maxlength="60"/></field>
+		<field name="adEntityId" title="${uiLabelMap.AdEntityId}" ><text size="40" maxlength="60"/></field>
+		<field name="lineNo" title="${uiLabelMap.LineNo}" ><text size="40" maxlength="60"/></field>
+		<field name="Refresh" title="vacant">
+			<kd-input type="button" style="k-textbox" value="刷新" updateGridName="gridAdKeymap" />
+		</field>
+	</form>
+	<!-- AdKeymap form end -->
+	
+	<!-- AdService form start -->
+	<form name="findAdService" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<field name="noConditionFind"><hidden value="Y"/></field>
+		<field name="adModuleId"><kd-drop-down-list type="tableDir" entity="AdModule" nameField="moduleName" valueField="adModuleId"/></field>
+		<field name="serviceName" title="${uiLabelMap.ServiceName}" ><text-find></text-find></field>
+		<field name="Refresh" title="vacant">
+			<kd-input type="button" style="k-textbox" value="刷新" updateGridName="gridAdService" />
+		</field>
+	</form>
+	<form name="editAdService" type="single"  default-map-name="adService" default-entity-name="AdService"  header-row-style="header-row" default-table-style="basic-table"> 
+		<field name="adServiceId" title="${uiLabelMap.AdServiceId}" ><hidden/></field>
+		<field name="adModuleId"  title="${uiLabelMap.AdModuleId}" ><kd-drop-down-list type="tableDir" entity="AdModule" valueField="adModuleId" nameField="moduleName" /></field>
+		<field name="defaultEntity" position="2" title="${uiLabelMap.DefaultEntity}" ><kd-drop-down-list type="tableDir" entity="AdEntity" valueField="adEntityId" nameField="entityName"/></field>
+		<field name="description" title="${uiLabelMap.Description}" ><text size="40" maxlength="60"/></field>
+		<field name="namespace" position="2" title="${uiLabelMap.Namespace}" ><text size="40" maxlength="60"/></field>
+		<field name="permissionService" title="${uiLabelMap.PermissionService}" ><text size="40" maxlength="60"/></field>
+		<field name="serviceName" position="2" title="${uiLabelMap.ServiceName}" ><text size="40" maxlength="60"/></field>
+		<field name="engine" title="${uiLabelMap.Engine}" ><text size="40" maxlength="60"/></field>
+		<field name="location" position="2"  title="${uiLabelMap.Location}" ><text size="40" maxlength="60"/></field>
+		<field name="invoke" title="${uiLabelMap.Invoke}" ><text size="40" maxlength="60"/></field>
+		<!-- 
+		<field name="auth" position="2"  title="${uiLabelMap.Auth}" ><check></check></field>
+		<field name="export" title="${uiLabelMap.Export}" ><check></check></field>
+		<field name="validated" position="2"  title="${uiLabelMap.Validated}" ><check></check></field>
+		<field name="defaultEntityName" title="${uiLabelMap.DefaultEntityName}" ><text size="40" maxlength="60"/></field>
+		<field name="useTransaction" position="2"  title="${uiLabelMap.UseTransaction}" ><check></check></field>
+		<field name="requireNewTransaction" title="${uiLabelMap.RequireNewTransaction}" ><check></check></field>
+		<field name="transactionTimeout" position="2"  title="${uiLabelMap.TransactionTimeout}" ><text size="40" maxlength="60"/></field>
+		<field name="maxRetry" title="${uiLabelMap.MaxRetry}" ><text size="40" maxlength="60"/></field>
+		<field name="debug" position="2"  title="${uiLabelMap.Debug}" ><check/></field>
+		<field name="semaphore" title="${uiLabelMap.Semaphore}" ><text size="40" maxlength="60"/></field>
+		<field name="semaphoreWaitSeconds" position="2"  title="${uiLabelMap.SemaphoreWaitSeconds}" ><kd-numeric-text-box min="1"/></field>
+		<field name="semaphoreSleep" title="${uiLabelMap.SemaphoreSleep}" ><kd-numeric-text-box min="1"/></field>
+		 -->
+		<button-list>
+			<kd-input type="button" use-when="adServiceId!=null" style="k-textbox" value="保存" ajaxUrl="updateAdService"/>
+			<kd-input type="button" use-when="adServiceId==null" style="k-textbox" value="添加" ajaxUrl="createAdService"/>
+			<kd-input type="reset"  use-when="adServiceId==null" style="k-textbox" value="重置"/>
+			<kd-input type="button" style="k-textbox" value="获得明细" onclick="getServiceDetail()"/>
+		</button-list>
+	</form>
+	<!-- AdService form end -->
+	
+	
+	<form name="findAdAttribute" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<field name="noConditionFind"><hidden value="Y"/></field>
+		<field name="name" title="${uiLabelMap.Name}" ><text-find></text-find></field>
+		<field name="type" title="${uiLabelMap.Type}" ><text-find></text-find></field>
+		<field name="Refresh" title="vacant">
+			<kd-input type="button" style="k-textbox" value="刷新" updateGridName="gridAdAttribute" />
+		</field>
+	</form>
+	<!-- AdAttribute form end -->
+	
+	<!-- AdViewmap form start -->
+	<form name="findAdViewmap" type="single"  header-row-style="header-row" default-table-style="basic-table">
+		<field name="noConditionFind"><hidden value="Y"/></field>
+		<field name="adModuleId"><kd-drop-down-list type="tableDir" entity="AdModule" nameField="moduleName" valueField="adModuleId"/></field>
+		<field name="viewName" title="${uiLabelMap.ViewName}" ><text-find></text-find></field>
+		<field name="type" title="${uiLabelMap.Type}" ><text-find></text-find></field>
+		<field name="Refresh" title="vacant">
+			<kd-input type="button" style="k-textbox" value="刷新" updateGridName="gridAdViewmap" />
+		</field>
+	</form>
+	<form name="editAdViewmap" default-map-name="adViewmap" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<field name="adViewmapId"><hidden/></field>
+		<field name="adModuleId">
+			<kd-drop-down-list type="tableDir" entity="AdModule" nameField="moduleName" valueField="adModuleId"/></field>
+		<field name="adEntityId" position="2">
+			<kd-drop-down-list type="tableDir" entity="AdEntity" nameField="entityName" valueField="adEntityId"/></field>
+		<field name="viewName"><text></text></field>
+		<field name="pageuri" position="2" ><text></text></field>
+		<field name="type"><text></text></field>
+		<field name="description"> <textarea cols="80" rows="3"/></field>
+		<!-- 
+		<field name="info" position="2"><text></text></field>
+		<field name="contentType"><text></text></field>
+		<field name="encoding" position="2"><text></text></field>
+		<field name="noCache"><text></text></field>
+		<field name="adSiteconfId" position="2"><text></text></field>
+		<field name="adRequestmapId"><text></text></field>
+		 -->
+		<button-list>
+			<kd-input use-when="adViewmapId!=null"  type="button" style="k-textbox" value="保存" ajaxUrl="updateAdViewmap"/>
+			<kd-input use-when="adViewmapId==null"  type="button" style="k-textbox" value="添加" ajaxUrl="createAdViewmap"/>
+			<kd-input use-when="adViewmapId==null"  type="reset" style="k-textbox" value="重置"/>
+			<kd-input type="button" style="k-textbox" value="获得明细" onclick="getViewmapDetail()"/>
+		</button-list>
+	</form>
+	<!-- AdViewmap form end -->
+
+	<!-- AdRequestmap form start -->
+	<form name="findAdRequestmap" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<field name="adModuleId"><kd-drop-down-list type="tableDir" entity="AdModule" nameField="moduleName" valueField="adModuleId"/></field>
+		<field name="noConditionFind"><hidden value="Y"/></field>
+		<field name="requestName" title="${uiLabelMap.RequestName}" ><text-find></text-find></field>
+		<field name="Refresh" title="vacant">
+			<kd-input type="button" style="k-textbox" value="刷新" updateGridName="gridAdRequestmap" />
+		</field>
+	</form>
+	<form name="editAdRequestmap" type="single" default-map-name="adRequestmap" header-row-style="header-row" default-table-style="basic-table">
+		<field name="adRequestmapId"><hidden/></field>
+		<field name="uri"><text></text></field>
+		<field name="requestName"  position="2"  ><text></text></field>
+		<field name="adModuleId">
+			<kd-drop-down-list type="tableDir"  entity="AdModule" valueField="adModuleId" nameField="moduleName"/></field>
+		<field name="adEntityId" position="2">
+			<kd-drop-down-list type="tableDir"  entity="AdEntity" nameField="entityName" valueField="adEntityId" /></field>
+		<field name="https"><check/></field>
+		<field name="auth"><check/></field>
+		<field name="eventType"><text></text></field>
+		<field name="eventPath"><text size="60" /></field>
+		<field name="eventInvoke" position="2"><text></text></field>
+		<!-- 
+		<field name="eventName"><text></text></field>
+		<field name="description"><text></text></field>
+		<field name="edit"  position="2"  ><text></text></field>
+		<field name="trackVisit"><text></text></field>
+		<field name="trackServerhit"  position="2"  ><text></text></field>
+		 -->
+		<button-list>
+			<kd-input type="button" use-when="adRequestmapId!=null" style="k-textbox" value="保存" ajaxUrl="updateAdRequestmap"/>
+			<kd-input type="button" use-when="adRequestmapId==null" style="k-textbox" value="添加" ajaxUrl="createAdRequestmap"/>
+			<kd-input type="reset"  use-when="adRequestmapId==null" style="k-textbox" value="重置"/>
+			<kd-input type="button" style="k-textbox" value="获得明细" onclick="getRequestmapDetail()"/>
+		</button-list>
+	</form>
+	<!-- AdRequestmap form end -->
+	
+	<!-- AdResponse form start -->
+	<form name="findAdResponse" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<field name="noConditionFind"><hidden value="Y"/></field>
+		<field name="adModuleId"><kd-drop-down-list type="tableDir" entity="AdModule" nameField="moduleName" valueField="adModuleId"/></field>
+		<field name="responseName" title="${uiLabelMap.ResponseName}" ><text-find></text-find></field>
+		<field name="type" title="${uiLabelMap.Type}" ><text-find></text-find></field>
+		<field name="Refresh" title="vacant">
+			<kd-input type="button" style="k-textbox" value="刷新" updateGridName="gridAdResponse"  />
+		</field>
+	</form>
+	<!-- AdResponse form start -->
+	
+	<!-- AdForm form start -->
+	<form name="findAdForm" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<field name="noConditionFind"><hidden value="Y"/></field>
+		<field name="adEntityId" title="${uiLabelMap.AdEntityId}" ><text-find></text-find></field>
+		<field name="formName" title="${uiLabelMap.FormName}" ><text-find></text-find></field>
+		<button-list>
+			<kd-input type="button" style="k-textbox" value="刷新" updateGridName="gridAdForm" />
+		</button-list>
+	</form>
+	<form name="editAdForm" type="single" default-map-name="adForm" header-row-style="header-row" default-table-style="basic-table"> 
+		<field name="adFormId" title="${uiLabelMap.AdFormId}" ><hidden/></field>
+		<field name="adViewmapId" title="${uiLabelMap.AdViewmapId}" >
+			<kd-drop-down-list type="tableDir" entity="AdViewmap" nameField="adViewmapId" valueField="adViewmapId"/></field>
+		<field name="adEntityId" title="${uiLabelMap.AdEntityId}" >
+			<kd-drop-down-list type="tableDir" entity="AdEntity" nameField="entityName" valueField="adEntityId"/></field>
+		<field name="formName" title="${uiLabelMap.FormName}" ><text size="40" maxlength="60"/></field>
+		<field name="type" title="${uiLabelMap.Type}" ><text size="40" maxlength="60"/></field>
+		<field name="defaultMapName" title="${uiLabelMap.DefaultMapName}" ><text size="40" maxlength="60"/></field>
+		<field name="headerRowStyle" title="${uiLabelMap.HeaderRowStyle}" ><text size="40" maxlength="60"/></field>
+		<field name="defaultTableStyle" title="${uiLabelMap.DefaultTableStyle}" ><text size="40" maxlength="60"/></field>
+		<button-list>
+			<kd-input use-when="adFormId!=null" type="button" style="k-textbox" value="保存" ajaxUrl="updateAdForm"/>
+			<kd-input use-when="adFormId==null" type="button" style="k-textbox" value="添加" ajaxUrl="createAdForm"/>
+			<kd-input use-when="adFormId==null" type="reset" style="k-textbox" value="重置"/>
+			<kd-input type="button" style="k-textbox" value="获得明细" onclick="getFormDetail()"/>
+		</button-list>
+	</form>
+	<!-- AdForm form end -->
+	
+	<!-- AdFormfield form start -->
+	<form name="findAdFormfield" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<field name="noConditionFind"><hidden value="Y"/></field>
+		<field name="adFormId" title="${uiLabelMap.AdFormId}" ><text-find></text-find></field>
+		<field name="adFieldId" title="${uiLabelMap.AdFieldId}" ><text-find></text-find></field>
+		<field name="formfieldName" title="${uiLabelMap.FormfieldName}" ><text-find></text-find></field>
+		<field name="entity" title="${uiLabelMap.Entity}" ><text-find></text-find></field>
+		<button-list>
+			<kd-input type="button" style="k-textbox" value="刷新" updateGridName="gridAdFormfield" />
+		</button-list>
+	</form>
+	<!-- AdFormfield form end -->
+	
+	<!-- AdGrid form start -->
+	<form name="findAdGrid" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<field name="noConditionFind"><hidden value="Y"/></field>
+		<field name="gridName" title="${uiLabelMap.GridName}" ><text-find></text-find></field>
+		<button-list>
+			<kd-input type="button" style="k-textbox" value="刷新" updateGridName="gridAdGrid" />
+		</button-list>
+	</form> 
+	<form name="editAdGrid" type="single" default-map-name="adGrid" header-row-style="header-row" default-table-style="basic-table">
+		<field name="adGridId" title="${uiLabelMap.AdGridId}" ><hidden/></field>
+		<field name="adViewmapId" title="${uiLabelMap.AdViewmapId}" >
+			<kd-drop-down-list type="tableDir" entity="AdViewmap" nameField="viewName" valueField="adViewmapId"/></field>
+		<field name="adEntityId" title="${uiLabelMap.AdEntityId}" position="2">
+			<kd-drop-down-list type="tableDir"  entity="AdEntity" nameField="entityName" valueField="adEntityId" /></field>
+		<field name="modelId" title="${uiLabelMap.ModelId}" ><text size="40" maxlength="60"/></field>
+		<field name="gridName" title="${uiLabelMap.GridName}" ><text size="40" maxlength="60"/></field>
+		<field name="resizable" title="${uiLabelMap.Resizable}" position="2"><text size="40" maxlength="60"/></field>
+		<field name="editableIn" title="${uiLabelMap.Editable}" ><text size="40" maxlength="60"/></field>
+		<field name="selectable" title="${uiLabelMap.Selectable}" position="2"><text size="40" maxlength="60"/></field>
+		<field name="height" title="${uiLabelMap.Height}" ><text size="40" maxlength="60"/></field>
+		<field name="pagesize" title="${uiLabelMap.Pagesize}" position="2"><text size="40" maxlength="60"/></field>
+		<field name="updateCommand" title="${uiLabelMap.UpdateCommand}" ><text size="40" maxlength="60"/></field>
+		<field name="createCommand" title="${uiLabelMap.CreateCommand}" ><text size="40" maxlength="60"/></field>
+		<field name="deleteCommand" title="${uiLabelMap.DeleteCommand}" ><text size="40" maxlength="60"/></field>
+		<button-list>
+			<kd-input use-when="adGridId!=null" type="button" style="k-textbox" value="保存" ajaxUrl="updateAdGrid"/>
+			<kd-input use-when="adGridId==null" type="button" style="k-textbox" value="添加" ajaxUrl="createAdGrid"/>
+			<kd-input use-when="adGridId==null" type="reset" style="k-textbox" value="重置"/>
+			<kd-input type="button" style="k-textbox" value="获得明细" onclick="getGridDetail()"/>
+		</button-list>
+	</form>
+	<!-- AdGrid form end -->
+	
+	<!-- AdGridfield form start -->
+	<form name="findAdGridfield" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<field name="noConditionFind"><hidden value="Y"/></field>
+		<field name="adGridfieldId" title="${uiLabelMap.AdGridfieldId}" ><text size="40" maxlength="60"/></field>
+		<field name="adGridId" title="${uiLabelMap.AdGridId}" ><text size="40" maxlength="60"/></field>
+		<field name="adFieldId" title="${uiLabelMap.AdFieldId}" ><text size="40" maxlength="60"/></field>
+		<field name="gridfieldName" title="${uiLabelMap.GridfieldName}" ><text size="40" maxlength="60"/></field>
+		<field name="gridfieldType" title="${uiLabelMap.GridfieldType}" ><text size="40" maxlength="60"/></field>
+		<field name="editableIn" title="${uiLabelMap.Editable}" ><text size="40" maxlength="60"/></field>
+		<field name="dropdowntype" title="${uiLabelMap.Dropdowntype}" ><text size="40" maxlength="60"/></field>
+		<field name="entity" title="${uiLabelMap.Entity}" ><text size="40" maxlength="60"/></field>
+		<field name="namefield" title="${uiLabelMap.Namefield}" ><text size="40" maxlength="60"/></field>
+		<field name="valuefield" title="${uiLabelMap.Valuefield}" ><text size="40" maxlength="60"/></field>
+		<field name="refencevalue" title="${uiLabelMap.Refencevalue}" ><text size="40" maxlength="60"/></field>
+		<button-list>
+			<kd-input type="button" style="k-textbox" value="刷新" updateGridName="gridAdGridfield" />
+		</button-list>
+	</form> 
+	<!-- AdGridfield form end -->
+	
+	<!-- AdGridcommand form start -->
+	<form name="findAdGridcommand" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<field name="noConditionFind"><hidden value="Y"/></field>
+		<field name="commandName" title="${uiLabelMap.CommandName}" ><text-find></text-find></field>
+		<field name="commandText" title="${uiLabelMap.CommandText}" ><text-find></text-find></field>
+		<field name="commandTitle" title="${uiLabelMap.CommandTitle}" ><text-find></text-find></field>
+		<field name="url" title="${uiLabelMap.Url}" ><text-find></text-find></field>
+		<button-list>
+			<kd-input type="button" style="k-textbox" value="刷新" updateGridName="gridAdGridcommand" />
+		</button-list>
+	</form>
+	<!-- AdGridcommand form end -->
+</forms>
