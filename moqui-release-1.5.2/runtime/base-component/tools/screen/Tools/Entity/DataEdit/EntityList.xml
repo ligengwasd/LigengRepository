@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This Work is in the public domain and is provided on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
+including, without limitation, any warranties or conditions of TITLE,
+NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE.
+You are solely responsible for determining the appropriateness of using
+this Work and assume any risks associated with your use of this Work.
+
+This Work includes contributions authored by David E. Jones, not as a
+"work for hire", who hereby disclaims any copyright to the same.
+-->
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-1.5.xsd"
+        default-menu-title="Entity List" default-menu-index="1">
+
+    <transition name="find"><default-response url="../EntityDataFind"/></transition>
+    <transition name="detail"><default-response url="../EntityDetail"/></transition>
+
+    <actions>
+        <set field="pageSize" from="pageSize ?: 60"/>
+        <set field="entityList" from="ec.entity.getAllEntitiesInfo(orderByField?:'fullEntityName', filterRegexp, false, false)"/>
+        <script>StupidUtilities.paginateList("entityList", null, context)</script>
+    </actions>
+    <widgets>
+        <form-single name="FilterForm" transition=".">
+            <field name="filterRegexp"><default-field><text-line size="30"/></default-field></field>
+            <field name="submitButton"><default-field title="Filter"><submit/></default-field></field>
+            <field-layout><field-row-big><field-ref name="filterRegexp"/><field-ref name="submitButton"/></field-row-big></field-layout>
+        </form-single>
+        <form-list name="EntityList" list="entityList">
+            <field name="package">
+                <header-field show-order-by="true"/>
+                <default-field><display also-hidden="false"/></default-field>
+            </field>
+            <field name="entityName">
+                <header-field show-order-by="true"/>
+                <default-field><display also-hidden="false"/></default-field>
+            </field>
+            <field name="isView">
+                <header-field title="View" show-order-by="true"/>
+                <default-field><display also-hidden="false"/></default-field>
+            </field>
+            <field name="Find"><default-field>
+                <link url="find" text="Find" link-type="anchor"/>
+            </default-field></field>
+            <field name="Detail"><default-field>
+                <link url="detail" text="Detail" link-type="anchor"/>
+            </default-field></field>
+        </form-list>
+    </widgets>
+</screen>

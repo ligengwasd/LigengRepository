@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This Work is in the public domain and is provided on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
+including, without limitation, any warranties or conditions of TITLE,
+NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE.
+You are solely responsible for determining the appropriateness of using
+this Work and assume any risks associated with your use of this Work.
+
+This Work includes contributions authored by David E. Jones, not as a
+"work for hire", who hereby disclaims any copyright to the same.
+-->
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/service-definition-1.5.xsd">
+
+    <service verb="index" noun="DataDocuments" authenticate="false">
+        <description>Indexes documents passed using ElasticSearch. The DataDocument must have an indexName.</description>
+        <implements service="org.moqui.EntityServices.receive#DataFeed"/>
+        <in-parameters>
+            <parameter name="dataFeedId" required="false"/>
+            <parameter name="feedStamp" type="Timestamp" required="false"/>
+            <parameter name="getOriginalDocuments" type="Boolean" default="false"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="documentVersionList" type="List" required="true"/>
+            <parameter name="originalDocumentList" type="List" required="false"/>
+        </out-parameters>
+        <actions>
+            <script>
+            import org.elasticsearch.action.index.IndexResponse
+            import org.slf4j.Logger
+            import org.slf4j.LoggerFactory
+            import org.moqui.context.ExecutionContext
+            ExecutionContext ec = context.ec
+            Logger logger = LoggerFactory.getLogger("org.moqui.impl.EntityServices.indexDataDocuments")
+
+            // Make sure all indices exist
+            Set indexNames = new HashSet()
+            for (Map document in documentList) indexNames.add(document._index)
+            for (String indexName in indexNames) {
+                ec.entity.getEntityDataDocument().checkCreateIndex(indexName)
+            }
+
+            documentVersionList = []
+            originalDocumentList = getOriginalDocuments ? [] : null
+            for (Map document in documentList) {
+                // logger.warn("====== Indexing document: ${document}")
+
+                if (getOriginalDocuments) {
+                    // this may fail for a number of reasons, like index doesn't exist yet, so catch the exception
+                    try {
+                        Map originalDocument = ec.elasticSearchClient
+                                .prepareGet((String) document._index, (String) document._type, (String) document._id)
+                                .execute().actionGet().getSourceAsMap()
+                        originalDocumentList.add(originalDocument ?: [:])
+                    } catch (Exception e) {
+                        logger.info("Could not get original document for [${document._index}, ${document._type}, ${document._id}]: ${e.toString()}")
+                        originalDocumentList.add([:])
+                    }
+                }
+                // Groovy DSL version
+                IndexResponse response = ec.elasticSearchClient.index { index document._index; type document._type;
+                    id document._id; source document; }.actionGet()
+                // Java API version
+                //IndexResponse response = ec.elasticSearchClient
+                //        .prepareIndex((String) document._index, (String) document._type, (String) document._id)
+                //        .setSource(document).execute().actionGet()
+
+                documentVersionList.add(response.getVersion())
+                if (logger.isTraceEnabled()) logger.trace("Indexed [${document._index}, ${document._type}, ${document._id}] version [${response.getVersion()}]")
+                // logger.warn("====== Indexed [${document._index}, ${document._type}, ${document._id}] version [${response.getVersion()}] created? ${response.isCreated()}}")
+            }
+            </script>
+        </actions>
+    </service>
+    <service verb="put" noun="DataDocumentMappings">
+        <in-parameters><parameter name="indexName" required="true"/></in-parameters>
+        <actions><script>ec.entity.getEntityDataDocument().putIndexMappings(indexName)</script></actions>
+    </service>
+
+    <service verb="index" noun="DataFeedDocuments" authenticate="false">
+        <in-parameters>
+            <parameter name="dataFeedId" required="true"/>
+            <parameter name="fromUpdateStamp" type="Timestamp"/>
+            <parameter name="thruUpdateStamp" type="Timestamp"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="documentsIndexed" type="Integer"/>
+        </out-parameters>
+        <actions>
+            <set field="documentList" from="ec.entity.getEntityDataFeed().getFeedDocuments(dataFeedId, fromUpdateStamp, thruUpdatedStamp)"/>
+            <set field="feedStamp" from="thruUpdateStamp ?: ec.user.nowTimestamp"/>
+            <if condition="documentList">
+                <service-call name="org.moqui.impl.EntityServices.index#DataDocuments" in-map="context"/>
+            </if>
+            <set field="documentsIndexed" from="documentList?.size() ?: 0"/>
+            <message>Indexed ${documentsIndexed} documents</message>
+        </actions>
+    </service>
+    <service verb="get" noun="DataFeedDocuments">
+        <in-parameters>
+            <parameter name="dataFeedId" required="true"/>
+            <parameter name="fromUpdateStamp" type="Timestamp"/>
+            <parameter name="thruUpdateStamp" type="Timestamp"/>
+        </in-parameters>
+        <out-parameters><parameter name="documentList" type="List"/></out-parameters>
+        <actions>
+            <set field="documentList" from="ec.entity.getEntityDataFeed().getFeedDocuments(dataFeedId, fromUpdateStamp, thruUpdatedStamp)"/>
+        </actions>
+    </service>
+    <service verb="get" noun="DataFeedLatestDocuments">
+        <description>This service gets the latest documents for a DataFeed based on DataFeed.lastFeedStamp, and updates
+            lastFeedStamp to the current time.</description>
+        <in-parameters><parameter name="dataFeedId" required="true"/></in-parameters>
+        <out-parameters><parameter name="documentList" type="List"/></out-parameters>
+        <actions>
+            <set field="documentList" from="ec.entity.getEntityDataFeed().getFeedLatestDocuments(dataFeedId)"/>
+        </actions>
+    </service>
+
+    <service verb="search" noun="DataDocuments">
+        <description>
+            The queryString format is the ElasticSearch supported one, based on the Lucene query strings which are
+            partly documented here:
+
+            http://lucene.apache.org/core/4_9_1/queryparser/org/apache/lucene/queryparser/classic/package-summary.html
+            http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax
+
+            Sort options are described here:
+
+            http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-sort.html
+        </description>
+        <in-parameters>
+            <parameter name="indexName" required="true"/>
+            <parameter name="documentType"><description>The ElasticSearch document type. For DataDocument based docs
+                this is the dataDocumentId.</description></parameter>
+            <parameter name="queryString" required="true"/>
+            <parameter name="orderByFields" type="List"/>
+            <parameter name="pageIndex" type="Integer" default-value="0"/>
+            <parameter name="pageSize" type="Integer" default-value="20"/>
+            <parameter name="flattenDocument" type="Boolean" default-value="true"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="documentList" type="List"><description>List of documents, each document is a Map with
+                nested Maps and Lists of Maps.</description></parameter>
+            <parameter name="documentListCount" type="Integer"><description>The total count of hits, not just the
+                limited number returned.</description></parameter>
+            <parameter name="documentListPageIndex" type="Integer"/>
+            <parameter name="documentListPageSize" type="Integer"/>
+            <parameter name="documentListPageMaxIndex" type="Integer"/>
+            <parameter name="documentListPageRangeLow" type="Integer"/>
+            <parameter name="documentListPageRangeHigh" type="Integer"/>
+        </out-parameters>
+        <actions>
+            <set field="fromOffset" from="pageIndex * pageSize"/>
+            <set field="sizeLimit" from="pageSize"/>
+            <!-- if documentType is an empty String it will find no results! -->
+            <set field="documentType" from="documentType ?: null"/>
+            <script>
+                /* useful docs for query API: http://www.elasticsearch.org/guide/reference/api/search/uri-request/ */
+
+                import org.elasticsearch.action.get.MultiGetItemResponse
+                import org.elasticsearch.action.get.MultiGetRequestBuilder
+                import org.elasticsearch.action.search.SearchRequestBuilder
+                import org.elasticsearch.index.query.QueryBuilders
+                import org.elasticsearch.search.SearchHit
+                import org.elasticsearch.search.SearchHits
+                import org.elasticsearch.search.sort.SortOrder
+                import org.moqui.context.ExecutionContext
+
+                ExecutionContext ec = context.ec
+
+                documentList = []
+
+                if (!indexName.contains("__")) indexName = "${ec.tenantId}__${indexName}".toLowerCase()
+
+                // make sure index exists
+                ec.entity.getEntityDataDocument().checkCreateIndex(indexName)
+
+                // get the search hits
+                SearchRequestBuilder srb = ec.elasticSearchClient.prepareSearch().setIndices(indexName).setTypes(documentType)
+                        .setQuery(QueryBuilders.queryString(queryString)).setFrom(fromOffset).setSize(sizeLimit)
+                        .setFetchSource(true)
+                for (String orderByField in orderByFields) {
+                    boolean ascending = true
+                    if (orderByField.charAt(0) == '-') {
+                        ascending = false
+                        orderByField = orderByField.substring(1)
+                    } else if (orderByField.charAt(0) == '+') {
+                        ascending = true
+                        orderByField = orderByField.substring(1)
+                    }
+                    // ec.logger.warn("========= adding ${orderByField}, ${ascending}")
+                    srb.addSort(orderByField, ascending ? SortOrder.ASC : SortOrder.DESC)
+                }
+
+                SearchHits hits = srb.execute().actionGet().getHits()
+                for (SearchHit hit in hits) {
+                    Map document = hit.getSource()
+                    documentList.add(flattenDocument ? StupidUtilities.flattenNestedMap(document) : document)
+                }
+
+                /* the old approach, without .setFetchSource(true)
+                if (hits.getTotalHits() > 0) {
+                    MultiGetRequestBuilder mgrb = ec.elasticSearchClient.prepareMultiGet()
+                    for (SearchHit hit in hits) mgrb.add(hit.getIndex(), hit.getType(), hit.getId())
+                    Iterator mgirIt = mgrb.execute().actionGet().iterator()
+                    while(mgirIt.hasNext()) {
+                        MultiGetItemResponse mgir = mgirIt.next()
+                        Map document = mgir.getResponse().getSourceAsMap()
+                        documentList.add(flattenDocument ? StupidUtilities.flattenNestedMap(document) : document)
+                    }
+                }
+                 */
+
+                // get the total search count
+                documentListCount = ec.elasticSearchClient.prepareCount(indexName).setTypes(documentType).setQuery(QueryBuilders.queryString(queryString)).execute().actionGet().getCount()
+
+                // calculate the pagination values
+                documentListPageIndex = pageIndex
+                documentListPageSize = pageSize
+                documentListPageMaxIndex = ((BigDecimal) documentListCount - 1).divide(documentListPageSize, 0, BigDecimal.ROUND_DOWN) as int
+                documentListPageRangeLow = documentListPageIndex * documentListPageSize + 1
+                documentListPageRangeHigh = (documentListPageIndex * documentListPageSize) + documentListPageSize
+                if (documentListPageRangeHigh > documentListCount) documentListPageRangeHigh = documentListCount
+            </script>
+        </actions>
+    </service>
+
+    <service verb="search" noun="CountBySource">
+        <description>
+            Search documents with a "count" type search, meant for analytics searches with aggregations.
+            Use either the sourceJson or sourceMap parameters for the search source.
+
+            A good overview of the use of aggregations is available at: http://www.elastic.co/guide/en/elasticsearch/guide/current/aggregations.html
+
+            For detailed documentation of aggregations including all aggregation types see: http://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html
+        </description>
+        <in-parameters>
+            <parameter name="indexName" required="true"/>
+            <parameter name="documentTypeList" type="List"><description>The ElasticSearch document type. For DataDocument based docs
+                this is the dataDocumentId.</description></parameter>
+            <parameter name="maxResults" type="Integer" default="1000"/>
+            <parameter name="sourceJson"/>
+            <parameter name="sourceMap" type="Map"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="searchResponse" type="org.elasticsearch.action.search.SearchResponse"/>
+            <!-- Get this with "searchResponse.toString()" if needed: <parameter name="responseString"/> -->
+        </out-parameters>
+        <actions>
+            <script>
+                import org.elasticsearch.action.search.SearchRequestBuilder
+                import org.elasticsearch.action.search.SearchResponse
+                import org.moqui.context.ExecutionContext
+
+                ExecutionContext ec = context.ec
+
+                if (!indexName.contains('__')) indexName = "${ec.tenantId}__${indexName}".toLowerCase()
+
+                // make sure index exists
+                ec.entity.getEntityDataDocument().checkCreateIndex(indexName)
+
+                // get the search hits
+                SearchRequestBuilder srb = ec.elasticSearchClient.prepareSearch().setIndices((String) indexName)
+                        .setSearchType('count').setSize(maxResults)
+                if (documentTypeList) srb.setTypes((String[]) documentTypeList.toArray(new String[documentTypeList.size()]))
+                if (sourceJson) srb.setExtraSource((String) sourceJson)
+                if (sourceMap) srb.setExtraSource((Map) sourceMap)
+
+                searchResponse = srb.execute().actionGet()
+                // aggregations = searchResponse.getAggregations().getAsMap()
+                // responseString = searchResponse.toString()
+            </script>
+        </actions>
+    </service>
+
+    <service verb="clone" noun="DataDocument">
+        <in-parameters>
+            <parameter name="dataDocumentId" required="true"/>
+            <parameter name="newDataDocumentId" required="true"/>
+            <parameter name="newIndexName" required="true"/>
+            <parameter name="copyConditions" default="false" type="Boolean"/>
+            <parameter name="copyLinks" default="false" type="Boolean"/>
+        </in-parameters>
+        <actions>
+            <entity-find-one entity-name="moqui.entity.document.DataDocument" value-field="dataDocument" cache="false"/>
+            <set field="dataDocument.dataDocumentId" from="newDataDocumentId"/>
+            <set field="dataDocument.indexName" from="newIndexName"/>
+            <entity-create value-field="dataDocument"/>
+
+            <entity-find entity-name="moqui.entity.document.DataDocumentField" list="ddfList">
+                <econdition field-name="dataDocumentId"/></entity-find>
+            <iterate list="ddfList" entry="ddf">
+                <set field="ddf.dataDocumentId" from="newDataDocumentId"/>
+                <entity-create value-field="ddf"/>
+            </iterate>
+
+            <entity-find entity-name="moqui.entity.document.DataDocumentRelAlias" list="ddraList">
+                <econdition field-name="dataDocumentId"/></entity-find>
+            <iterate list="ddraList" entry="ddra">
+                <set field="ddra.dataDocumentId" from="newDataDocumentId"/>
+                <entity-create value-field="ddra"/>
+            </iterate>
+
+            <if condition="copyConditions">
+                <entity-find entity-name="moqui.entity.document.DataDocumentCondition" list="ddcList">
+                    <econdition field-name="dataDocumentId"/></entity-find>
+                <iterate list="ddcList" entry="ddc">
+                    <set field="ddc.dataDocumentId" from="newDataDocumentId"/>
+                    <entity-create value-field="ddc"/>
+                </iterate>
+            </if>
+
+            <if condition="copyLinks">
+                <entity-find entity-name="moqui.entity.document.DataDocumentLink" list="ddlList">
+                    <econdition field-name="dataDocumentId"/></entity-find>
+                <iterate list="ddlList" entry="ddl">
+                    <set field="ddl.dataDocumentId" from="newDataDocumentId"/>
+                    <entity-create value-field="ddl"/>
+                </iterate>
+            </if>
+        </actions>
+    </service>
+</services>

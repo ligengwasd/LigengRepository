@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This Work is in the public domain and is provided on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
+including, without limitation, any warranties or conditions of TITLE,
+NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE.
+You are solely responsible for determining the appropriateness of using
+this Work and assume any risks associated with your use of this Work.
+
+This Work includes contributions authored by David E. Jones, not as a
+"work for hire", who hereby disclaims any copyright to the same.
+-->
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/service-definition-1.5.xsd">
+
+    <service verb="send" noun="EmailTemplate" type="interface">
+        <description>Send Email with settings in EmailTemplate entity record</description>
+        <in-parameters>
+            <parameter name="emailTemplateId" required="true"/>
+            <parameter name="toAddresses" type="String"/>
+            <parameter name="bodyParameters" type="Map"/>
+            <parameter name="createEmailMessage" type="Boolean" default="true"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="messageId"><description>From the Message-ID email header field.</description></parameter>
+            <parameter name="emailMessageId"><description>If createEmailMessage=true the ID of the EmailMessage record.</description></parameter>
+        </out-parameters>
+    </service>
+    
+    <service verb="process" noun="EmailEca" type="interface">
+        <description>Defines input parameters matching what is available when an Email ECA rule is called.</description>
+        <in-parameters>
+            <parameter name="fields" type="Map">
+                <parameter name="toList" type="List"/>
+                <parameter name="ccList" type="List"/>
+                <parameter name="bccList" type="List"/>
+                <parameter name="from"/>
+                <parameter name="subject"/>
+                <parameter name="sentDate" type="java.util.Date"/>
+                <parameter name="receivedDate" type="java.util.Date"/>
+                <parameter name="bodyPartList" type="List"><description>List of String for each body part. If the
+                    message is not multi-part will have a single String entry.</description></parameter>
+            </parameter>
+            <parameter name="headers" type="Map"/>
+        </in-parameters>
+    </service>
+</services>

@@ -1,0 +1,192 @@
+/*
+ * This Work is in the public domain and is provided on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
+ * including, without limitation, any warranties or conditions of TITLE,
+ * NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE.
+ * You are solely responsible for determining the appropriateness of using
+ * this Work and assume any risks associated with your use of this Work.
+ *
+ * This Work includes contributions authored by David E. Jones, not as a
+ * "work for hire", who hereby disclaims any copyright to the same.
+ */
+
+allprojects { version = '1.5.2' }
+
+def tomcatHome = '../apache-tomcat-8.0.21'
+def warName = 'moqui-' + version + '.war'
+def plusRuntimeName = 'moqui-plus-runtime.war'
+def execTempDir = 'execwartmp'
+
+def moquiRuntime = 'runtime'
+
+def moquiConfDev = 'conf/MoquiDevConf.xml'
+def moquiConfProduction = 'conf/MoquiProductionConf.xml'
+
+def allBuildTasks = []
+def allCleanTasks = []
+allprojects {
+    afterEvaluate { project ->
+        for (def task in project.tasks) {
+            if (task.name == 'build') allBuildTasks.add(task)
+            if (task.name == 'clean') allCleanTasks.add(task)
+        }
+    }
+}
+// ========== clean tasks ==========
+
+task clean(type: Delete) { delete file(warName); delete file(execTempDir) }
+task cleanTempDir(type: Delete) { delete file(execTempDir) }
+task cleanDb(type: Delete) { delete files(file(moquiRuntime+'/db/derby').listFiles()) - files(moquiRuntime+'/db/derby/derby.properties'); delete file(moquiRuntime+'/db/h2') }
+task cleanOrientDb(type: Delete) { delete file(moquiRuntime+'/db/orientdb/databases') }
+task cleanElasticSearch(type: Delete) { delete file(moquiRuntime+'/elasticsearch/data') }
+task cleanLog(type: Delete) { delete fileTree(dir: moquiRuntime+'/log', include: '*') }
+task cleanTxLog(type: Delete) { delete fileTree(dir: moquiRuntime+'/txlog', include: '*') }
+task cleanLoadSave(type: Delete) { delete file('SaveDEFAULT.zip'); delete file('SaveTenant.zip'); delete file('SaveTransactional.zip');
+    delete file('SaveAnalytical.zip'); delete file('SaveOrientDb.zip'); delete file('SaveElasticSearch.zip') }
+task cleanPlusRuntime(type: Delete) { delete file(plusRuntimeName) }
+task cleanOther(type: Delete) { delete fileTree(dir: '.', includes: ['**/.nbattrs', '**/*~', '**/.#*', '**/.DS_Store', '**/*.rej', '**/*.orig']) }
+
+task cleanAll {
+    dependsOn clean
+    dependsOn allCleanTasks
+    dependsOn cleanDb
+    dependsOn cleanOrientDb
+    dependsOn cleanElasticSearch
+    dependsOn cleanTxLog
+    dependsOn cleanLog
+    dependsOn cleanLoadSave
+    dependsOn cleanPlusRuntime
+    dependsOn cleanOther
+}
+
+// ========== run tasks ==========
+
+task run(type: JavaExec) {
+    dependsOn allBuildTasks
+    dependsOn cleanTempDir
+    workingDir = '.'; jvmArgs = ['-server', '-XX:MaxPermSize=192m', '-XX:-OmitStackTraceInFastThrow']; maxHeapSize = '256M'
+    systemProperties = ['moqui.conf':moquiConfDev, 'moqui.runtime':moquiRuntime]
+    // NOTE: this is a hack, using -jar instead of a class name, and then the first argument is the name of the jar file
+    main = '-jar'; args = [warName]
+}
+task runStaging(type: JavaExec) {
+    dependsOn allBuildTasks
+    dependsOn cleanTempDir
+    workingDir = '.'; jvmArgs = ['-server', '-XX:MaxPermSize=192m', '-Xms512M']; maxHeapSize = '512M'
+    systemProperties = ['moqui.conf':'conf/MoquiStagingConf.xml', 'moqui.runtime':moquiRuntime]
+    main = '-jar'; args = [warName]
+}
+task runProduction(type: JavaExec) {
+    dependsOn allBuildTasks
+    dependsOn cleanTempDir
+    workingDir = '.'; jvmArgs = ['-server', '-XX:MaxPermSize=192m', '-Xms1024M']; maxHeapSize = '1024M'
+    systemProperties = ['moqui.conf':moquiConfProduction, 'moqui.runtime':moquiRuntime]
+    main = '-jar'; args = [warName]
+}
+
+// use user-specified command line args like: "gradle load -Ptypes=seed -PtenantId=EXAMPLE1"
+task load(type: JavaExec) {
+    dependsOn allBuildTasks
+    workingDir = '.'; jvmArgs = ['-server', '-XX:MaxPermSize=192m']; maxHeapSize = '512M'
+    systemProperties = ['moqui.conf':moquiConfDev, 'moqui.runtime':moquiRuntime]
+    main = '-jar'
+    def argList = [warName, '-load']
+    if (project.properties.containsKey('types')) argList.add("-types=${types}")
+    if (project.properties.containsKey('tenantId')) argList.add("-tenantId=${tenantId}")
+    args = argList
+}
+task loadProduction(type: JavaExec) {
+    dependsOn allBuildTasks
+    workingDir = '.'; jvmArgs = ['-server', '-XX:MaxPermSize=192m']; maxHeapSize = '512M'
+    systemProperties = ['moqui.conf':moquiConfProduction, 'moqui.runtime':moquiRuntime]
+    main = '-jar'
+    def argList = [warName, '-load']
+    if (project.properties.containsKey('types')) argList.add("-types=${types}")
+    if (project.properties.containsKey('tenantId')) argList.add("-tenantId=${tenantId}")
+    args = argList
+}
+
+task loadSaveExec << {
+    if (file(moquiRuntime+'/db/derby/MoquiDEFAULT').exists()) ant.zip(destfile: 'SaveDEFAULT.zip') { fileset(dir: moquiRuntime+'/db/derby/MoquiDEFAULT') { include(name: '**/*') } }
+
+    if (file(moquiRuntime+'/db/derby/MoquiTenant').exists()) ant.zip(destfile: 'SaveTenant.zip') { fileset(dir: moquiRuntime+'/db/derby/MoquiTenant') { include(name: '**/*') } }
+    if (file(moquiRuntime+'/db/derby/MoquiTransactional').exists()) ant.zip(destfile: 'SaveTransactional.zip') { fileset(dir: moquiRuntime+'/db/derby/MoquiTransactional') { include(name: '**/*') } }
+    if (file(moquiRuntime+'/db/derby/MoquiAnalytical').exists()) ant.zip(destfile: 'SaveAnalytical.zip') { fileset(dir: moquiRuntime+'/db/derby/MoquiAnalytical') { include(name: '**/*') } }
+    if (file(moquiRuntime+'/db/orientdb/databases').exists()) ant.zip(destfile: 'SaveOrientDb.zip') { fileset(dir: moquiRuntime+'/db/orientdb/databases') { include(name: '**/*') } }
+    if (file(moquiRuntime+'/elasticsearch/data').exists()) ant.zip(destfile: 'SaveElasticSearch.zip') { fileset(dir: moquiRuntime+'/elasticsearch/data') { include(name: '**/*') } }
+}
+task loadSave {
+    dependsOn cleanAll
+    dependsOn load
+    dependsOn loadSaveExec
+}
+
+task reloadSaveExec << {
+    if (file('SaveDEFAULT.zip').exists()) copy { from zipTree('SaveDEFAULT.zip'); into file(moquiRuntime+'/db/derby/MoquiDEFAULT') }
+
+    if (file('SaveTenant.zip').exists()) copy { from zipTree('SaveTenant.zip'); into file(moquiRuntime+'/db/derby/MoquiTenant') }
+    if (file('SaveTransactional.zip').exists()) copy { from zipTree('SaveTransactional.zip'); into file(moquiRuntime+'/db/derby/MoquiTransactional') }
+    if (file('SaveAnalytical.zip').exists()) copy { from zipTree('SaveAnalytical.zip'); into file(moquiRuntime+'/db/derby/MoquiAnalytical') }
+    if (file('SaveOrientDb.zip').exists()) copy { from zipTree('SaveOrientDb.zip'); into file(moquiRuntime+'/db/orientdb/databases') }
+    if (file('SaveElasticSearch.zip').exists()) copy { from zipTree('SaveElasticSearch.zip'); into file(moquiRuntime+'/elasticsearch/data') }
+}
+task reloadSave {
+    // dependsOn cleanAll
+    dependsOn cleanTempDir
+    dependsOn cleanDb
+    dependsOn cleanOrientDb
+    dependsOn cleanElasticSearch
+    dependsOn cleanTxLog
+    dependsOn cleanLog
+    dependsOn allBuildTasks
+
+    dependsOn reloadSaveExec
+}
+
+// ========== deploy tasks ==========
+
+task deployTomcat << {
+    // remove runtime directory, may have been added for logs/etc
+    delete file(tomcatHome + '/runtime')
+    // remove ROOT directory and war to avoid conflicts
+    delete file(tomcatHome + '/webapps/ROOT')
+    delete file(tomcatHome + '/webapps/ROOT.war')
+    // copy the war file to ROOT.war
+    copy { from file(warName); into file(tomcatHome + '/webapps'); rename(warName, 'ROOT.war') }
+}
+
+task addRuntime << {
+    // unzip the "moqui-${version}.war" file to the wartemp directory
+    //directory { dir = file('wartemp') }
+    copy { from zipTree(warName); into file('wartemp') }
+    // copy runtime directory (with a few exceptions) into a runtime directory in the war
+    copy {
+        from fileTree(dir: '.', include: moquiRuntime+'/**', excludes: ['**/*.jar', moquiRuntime+'/classes/**', moquiRuntime+'/lib/**', moquiRuntime+'/log/**'])
+        into file('wartemp')
+    }
+    // copy the jar files from runtime/lib
+    copy { from fileTree(dir: moquiRuntime+'/lib', include: '*.jar'); into 'wartemp/WEB-INF/lib' }
+    // copy the classpath resource files from runtime/classes
+    copy { from fileTree(dir: moquiRuntime+'/classes', include: '**/*'); into 'wartemp/WEB-INF/classes' }
+    // copy the jar files from components?
+    copy { from fileTree(dir: moquiRuntime+'/component', include: '**/*.jar'); into 'wartemp/WEB-INF/lib' }
+    // this copies whole directory tree, how to just get files? copy { from fileTree(dir: 'runtime/component', include: '**/*.jar'); into 'wartemp/WEB-INF/lib' }
+    // add MoquiInit.properties fresh copy, just in case it was changed
+    copy { from file('MoquiInit.properties'); into 'wartemp/WEB-INF/classes' }
+
+    // zip it up again
+    ant.zip(destfile: plusRuntimeName) { fileset(dir: 'wartemp') { include(name: '**/*') } }
+    // alternative once supported: zip { archiveName plusRuntimeName; from fileTree(dir: 'wartemp', include: '**/*') }
+    // clean up the temporary directory
+    delete file('wartemp')
+}
+
+// don't use this task directly, use addRuntimeTomcat which calls this
+task deployTomcatRuntime << {
+    delete file(tomcatHome + '/runtime'); delete file(tomcatHome + '/webapps/ROOT'); delete file(tomcatHome + '/webapps/ROOT.war')
+    copy { from file(plusRuntimeName); into file(tomcatHome + '/webapps'); rename(plusRuntimeName, 'ROOT.war') }
+}
+task addRuntimeTomcat {
+    dependsOn addRuntime
+    dependsOn deployTomcatRuntime
+}
