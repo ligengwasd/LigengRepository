@@ -1,1 +1,0 @@
-			<key-map field-name="${field.fieldName}" rel-field-name="${relField.fieldName}" />

@@ -1,1 +1,0 @@
-		<security https="<#if adSecurity.https=="Y">true<#else>false</#if>" auth="<#if adSecurity.auth=="Y">true<#else>false</#if>"/>
