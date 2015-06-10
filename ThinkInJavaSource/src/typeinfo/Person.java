@@ -1,3 +1,5 @@
+package typeinfo;
+
 //: typeinfo/Person.java
 // A class with a Null Object.
 import net.mindview.util.*;
@@ -11,12 +13,11 @@ class Person {
     this.first = first;
     this.last = last;
     this.address = address;
-  }	
+  }
   public String toString() {
     return "Person: " + first + " " + last + " " + address;
   }
-  public static class NullPerson
-  extends Person implements Null {
+  public static class NullPerson extends Person implements Null {
     private NullPerson() { super("None", "None", "None"); }
     public String toString() { return "NullPerson"; }
   }

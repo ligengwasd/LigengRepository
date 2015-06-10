@@ -212,17 +212,17 @@
         xa-properties element. If the xa-properties element is present the normal JDBC parameters will be ignored.
         -->
 
-        <datasource group-name="transactional" database-conf-name="h2" schema-name=""
+        <!-- <datasource group-name="transactional" database-conf-name="h2" schema-name=""
                 start-server-args="-tcpPort 9092 -ifExists -baseDir ${moqui.runtime}/db/h2">
-            <!-- with this setup you can connect remotely using "jdbc:h2:tcp://localhost:9092/MoquiDEFAULT" -->
+            with this setup you can connect remotely using "jdbc:h2:tcp://localhost:9092/MoquiDEFAULT"
             <inline-jdbc pool-minsize="5" pool-maxsize="50">
                 <xa-properties url="jdbc:h2:${moqui.runtime}/db/h2/MoquiDEFAULT" user="sa" password="sa"/>
             </inline-jdbc>
-            <!-- <inline-jdbc jdbc-uri="jdbc:h2:${moqui.runtime}/db/h2/MoquiDEFAULT"
+            <inline-jdbc jdbc-uri="jdbc:h2:${moqui.runtime}/db/h2/MoquiDEFAULT"
                          jdbc-username="sa" jdbc-password=""
-                         pool-minsize="5" pool-maxsize="50"/> -->
-            <!-- <jndi-jdbc jndi-name="java:/MoquiDEFAULTDataSource"/> -->
-        </datasource>
+                         pool-minsize="5" pool-maxsize="50"/>
+            <jndi-jdbc jndi-name="java:/MoquiDEFAULTDataSource"/>
+        </datasource> -->
         <!-- The entity-facade.default-group-name=transactional, so if other entity groups do not have a data source
             the transactional group's datasource will be used. -->
 
@@ -248,11 +248,11 @@
         -->
 
         <!-- The tenantcommon group can also in the same DB, but MUST have a separate definition for multi-tenant to work -->
-        <datasource group-name="tenantcommon" database-conf-name="h2" schema-name="">
+        <!-- <datasource group-name="tenantcommon" database-conf-name="h2" schema-name="">
             <inline-jdbc pool-minsize="2" pool-maxsize="10">
                 <xa-properties url="jdbc:h2:${moqui.runtime}/db/h2/MoquiDEFAULT" user="sa" password="sa"/>
             </inline-jdbc>
-        </datasource>
+        </datasource> -->
 
 
         <!-- ===== some examples of how other databases would be configured ===== -->
@@ -297,11 +297,11 @@
                     jdbc-username="moqui" jdbc-password="moqui" pool-minsize="2" pool-maxsize="50"/> - ->
         </datasource>
         -->
-        <!-- MySQL
+        <!-- MySQL -->
         <datasource group-name="transactional" database-conf-name="mysql" schema-name="">
             <inline-jdbc jdbc-uri="jdbc:mysql://127.0.0.1:3306/MoquiDEFAULT?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"
-                    jdbc-username="moqui" jdbc-password="moqui" pool-minsize="2" pool-maxsize="50"/>
-            <!- - these two XA examples are untested, but show the general idea; the MysqlDataSource class has a LOT of configuration options
+                    jdbc-username="root" jdbc-password="root" pool-minsize="2" pool-maxsize="50"/>
+            <!-- these two XA examples are untested, but show the general idea; the MysqlDataSource class has a LOT of configuration options
             <inline-jdbc pool-minsize="5" pool-maxsize="50">
                 <xa-properties user="moqui" password="moqui" pinGlobalTxToPhysicalConnection="true" explicitUrl="true"
                         url="jdbc:mysql://127.0.0.1:3306/MoquiDEFAULT?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
@@ -309,9 +309,9 @@
                         hostName="127.0.0.1" port="3306" databaseName="MoquiDEFAULT" autoReconnectForPools="true"
                         useUnicode="true" encoding="UTF-8"/>
             </inline-jdbc>
-            - ->
+            -->
         </datasource>
-        -->
+        
         <!-- Oracle
         <datasource group-name="transactional" database-conf-name="oracle" schema-name="MOQUI">
             <inline-jdbc pool-minsize="5" pool-maxsize="50">

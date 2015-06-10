@@ -7,5 +7,5 @@ class Cake {
     x.f();
   }
 } /* Output:
-Pie.f()
+Pie.f()xdddd
 *///:~
